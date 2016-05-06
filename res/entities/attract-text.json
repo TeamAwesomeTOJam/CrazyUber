@@ -1,0 +1,10 @@
+{
+  "x": 960,
+  "y": 540,
+  "font": "LiberationSans-Regular",
+  "text": "Crazy Uber",
+  "size": 50,
+  "colour": [255, 255, 255, 255],
+  "components" : ["StaticTextComponent"],
+  "tags" : ["draw"]
+}

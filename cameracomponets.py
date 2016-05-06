@@ -6,7 +6,7 @@ from awesomeengine import engine
 class FollowComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, ['x', 'y', 'target'])
+        verify_attrs(entity, ['angle', 'x', 'y', 'target'])
 
         entity.register_handler('update', self.handle_update)
 
@@ -16,3 +16,4 @@ class FollowComponent(Component):
     def handle_update(self, entity, dt):
         entity.x = entity.target.x
         entity.y = entity.target.y
+        entity.angle = entity.target.angle - 90

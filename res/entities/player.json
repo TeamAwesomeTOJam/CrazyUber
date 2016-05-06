@@ -5,13 +5,13 @@
   "height": 100,
   "angle": 90,
   "name": "player",
-  "components": ["DrawHitBoxComponent", "ForceVelocityComponent", "VelocityMoveComponent", "CarPhysicsComponent", "InputEngineComponent"],
+  "components": ["DrawHitBoxComponent", "VelocityMoveComponent", "CarPhysicsComponent", "InputEngineComponent"],
   "tags": ["draw", "update"],
 
   "mass" : 1,
   "drag_coefficient": 0.002,
   "rolling_coefficient": 0.03,
-  "base_engine_force": 100,
-  "base_breaking_force": 100,
-  "max_steering_angle": 45
+  "base_engine_force": 500,
+  "base_breaking_force": 500,
+  "max_steering_angle": 15
 }

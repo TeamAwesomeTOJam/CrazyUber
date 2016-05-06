@@ -8,7 +8,9 @@ import math
 class CarPhysicsComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, ['width', ('steering_angle', 0), 'angle', ('breaking_force', 0), ('engine_force',0), ('vx',0), ('vy',0), 'drag_coefficient', 'rolling_coefficient'])
+        verify_attrs(entity, ['mass', ('velocity', 0),
+                              'width', ('steering_angle', 0),
+                              'angle', ('breaking_force', 0), ('engine_force',0), ('vx',0), ('vy',0), 'drag_coefficient', 'rolling_coefficient'])
 
         entity.register_handler('update', self.handle_update)
 
@@ -17,31 +19,46 @@ class CarPhysicsComponent(Component):
 
     def handle_update(self, entity, dt):
 
-        facing = Vec2d(1,0)
-        facing.angle = entity.angle
+        # facing = Vec2d(1,0)
+        # facing.angle = entity.angle
+        #
+        # velocity = Vec2d(entity.vx ,entity.vy)
+        #
+        # f_engine = entity.engine_force * facing
+        #
+        # if velocity.dot(facing) > 0:
+        #     f_breaking = - entity.breaking_force * facing
+        # else:
+        #     f_breaking = Vec2d(0,0)
+        #
+        # f_drag = - entity.drag_coefficient * velocity * velocity.length
+        #
+        # f_rolling = - entity.rolling_coefficient * velocity
+        #
+        # f = f_engine + f_drag + f_rolling + f_breaking
+        #
+        # entity.fx = f.x
+        # entity.fy = f.y
 
-        velocity = Vec2d(entity.vx ,entity.vy)
+        f = entity.engine_force
 
-        f_engine = entity.engine_force * facing
+        if entity.velocity > 0:
+            f -= entity.breaking_force
 
-        if velocity.dot(facing) > 0:
-            f_breaking = - entity.breaking_force * facing
-        else:
-            f_breaking = Vec2d(0,0)
+        f -= entity.drag_coefficient * entity.velocity * entity.velocity
+        f -= entity.rolling_coefficient * entity.velocity
 
-        f_drag = - entity.drag_coefficient * velocity * velocity.length
+        new_velocity = entity.velocity + dt * f / entity.mass
+        if new_velocity < 0:
+            new_velocity = 0
 
-        f_rolling = - entity.rolling_coefficient * velocity
-
-        f = f_engine + f_drag + f_rolling + f_breaking
-
-        entity.fx = f.x
-        entity.fy = f.y
-
+        entity.vx = new_velocity * math.cos(math.radians(entity.angle))
+        entity.vy = new_velocity * math.sin(math.radians(entity.angle))
+        entity.velocity = new_velocity
 
         if entity.steering_angle:
             corner_radius = entity.width / math.sin(math.radians(entity.steering_angle))
-            entity.angle += dt * math.degrees(velocity.length / corner_radius)
+            entity.angle += dt * math.degrees(entity.velocity / corner_radius)
 
 class InputEngineComponent(Component):
 

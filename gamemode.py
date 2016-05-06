@@ -12,7 +12,7 @@ class GameMode(awesomeengine.mode.Mode):
 
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
-                                      awesomeengine.layer.GridLayer(),
+                                      awesomeengine.layer.GridLayer((200,200,200,255), 100),
                                       awesomeengine.layer.DepthSortedLayer('draw')],
                               hud=[])
 

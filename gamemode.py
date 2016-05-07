@@ -10,7 +10,9 @@ class GameMode(awesomeengine.mode.Mode):
         player = e.add_entity('player')
         player_cam_entity = e.add_entity('player-cam', target=player)
 
-        self.entities = [player_cam_entity, player, building]
+        test_car = e.add_entity('car', x = 0, y = 100)
+
+        self.entities = [player_cam_entity, player, building, test_car]
 
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),

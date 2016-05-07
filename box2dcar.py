@@ -178,16 +178,17 @@ class TDCar(object):
             tire.update_drive(desired_speed)
 
         # control steering
-        lock_angle = math.radians(40.)
+        lock_angle = 40
+
+        if steering_angle > lock_angle:
+            steering_angle = lock_angle
+        elif steering_angle < -lock_angle:
+            steering_angle = -lock_angle
+
         # from lock to lock in 0.5 sec
         turn_speed_per_sec = math.radians(160.)
         turn_per_timestep = turn_speed_per_sec / hz
-        desired_angle = 0.0
 
-        # if 'left' in keys:
-        #     desired_angle = lock_angle
-        # elif 'right' in keys:
-        #     desired_angle = -lock_angle
         desired_angle = math.radians(steering_angle)
 
         front_left_joint, front_right_joint = self.joints[2:4]

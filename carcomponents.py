@@ -45,9 +45,6 @@ class Box2dCarComponent(Component):
     def handle_update(self, entity, dt):
         entity.box2d_car.update(entity.steering_angle, entity.desired_speed, dt)
 
-        entity.x = entity.box2d_car.body.position.x
-        entity.y = entity.box2d_car.body.position.y
-
         entity.x, entity.y = entity.box2d_car.body.GetWorldPoint((0,0))
         entity.angle = math.degrees(entity.box2d_car.body.angle) + 90
 

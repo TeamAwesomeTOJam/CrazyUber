@@ -16,4 +16,4 @@ class FollowComponent(Component):
     def handle_update(self, entity, dt):
         entity.x = entity.target.x
         entity.y = entity.target.y
-        entity.angle = entity.target.angle - 90
+        # entity.angle = entity.target.angle - 90

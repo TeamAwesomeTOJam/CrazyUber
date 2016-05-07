@@ -15,8 +15,7 @@ class TDGroundArea(object):
 
 class TDTire(object):
 
-    def __init__(self, car, max_forward_speed=100.0,
-                 max_backward_speed=-20, max_drive_force=150,
+    def __init__(self, car, max_drive_force=150,
                  turn_torque=15, max_lateral_impulse=3,
                  dimensions=(0.5, 1.25), density=1.0,
                  position=(0, 0)):
@@ -25,8 +24,6 @@ class TDTire(object):
 
         self.current_traction = 1
         self.turn_torque = turn_torque
-        self.max_forward_speed = max_forward_speed
-        self.max_backward_speed = max_backward_speed
         self.max_drive_force = max_drive_force
         self.max_lateral_impulse = max_lateral_impulse
         self.ground_areas = []
@@ -67,13 +64,7 @@ class TDTire(object):
         self.body.ApplyForce(self.current_traction * drag_force_magnitude * current_forward_normal,
                              self.body.worldCenter, True)
 
-    def update_drive(self, keys):
-        if 'up' in keys:
-            desired_speed = self.max_forward_speed
-        elif 'down' in keys:
-            desired_speed = self.max_backward_speed
-        else:
-            return
+    def update_drive(self, desired_speed):
 
         # find the current speed in the forward direction
         current_forward_normal = self.body.GetWorldVector((0, 1))
@@ -91,15 +82,15 @@ class TDTire(object):
         self.body.ApplyForce(self.current_traction * force * current_forward_normal,
                              self.body.worldCenter, True)
 
-    def update_turn(self, keys):
-        if 'left' in keys:
-            desired_torque = self.turn_torque
-        elif 'right' in keys:
-            desired_torque = -self.turn_torque
-        else:
-            return
-
-        self.body.ApplyTorque(desired_torque, True)
+    # def update_turn(self, keys):
+    #     if 'left' in keys:
+    #         desired_torque = self.turn_torque
+    #     elif 'right' in keys:
+    #         desired_torque = -self.turn_torque
+    #     else:
+    #         return
+    #
+    #     self.body.ApplyTorque(desired_torque, True)
 
     def add_ground_area(self, ud):
         if ud not in self.ground_areas:
@@ -177,12 +168,12 @@ class TDCar(object):
             tire.body.position = self.body.worldCenter + anchor
             joints.append(j)
 
-    def update(self, keys, hz):
+    def update(self, steering_angle, desired_speed, hz):
         for tire in self.tires:
             tire.update_friction()
 
         for tire in self.tires:
-            tire.update_drive(keys)
+            tire.update_drive(desired_speed)
 
         # control steering
         lock_angle = math.radians(40.)
@@ -191,10 +182,11 @@ class TDCar(object):
         turn_per_timestep = turn_speed_per_sec / hz
         desired_angle = 0.0
 
-        if 'left' in keys:
-            desired_angle = lock_angle
-        elif 'right' in keys:
-            desired_angle = -lock_angle
+        # if 'left' in keys:
+        #     desired_angle = lock_angle
+        # elif 'right' in keys:
+        #     desired_angle = -lock_angle
+        desired_angle = math.radians(steering_angle)
 
         front_left_joint, front_right_joint = self.joints[2:4]
         angle_now = front_left_joint.angle

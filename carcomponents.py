@@ -83,11 +83,10 @@ class InputEngineComponent(Component):
 class Box2dCarComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, [('gas', 0), ('breaks', 0), ('left', 0), ('right', 0)])
+        verify_attrs(entity, [('max_lateral_impulse', 3), 'max_steering_angle', 'engine_force', ('steering_angle', 0), 'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)] )
         entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
-                                          max_forward_speed=200,
-                                          max_drive_force=300,
-                                          max_lateral_impulse=6)
+                                          max_drive_force = entity.engine_force,
+                                          max_lateral_impulse= entity.max_lateral_impulse)
 
         entity.register_handler('input', self.handle_input)
         entity.register_handler('update', self.handle_update)
@@ -99,39 +98,17 @@ class Box2dCarComponent(Component):
 
     def handle_update(self, entity, dt):
         keys = []
-        if entity.gas:
-            keys.append('up')
-        if entity.breaks:
-            keys.append('down')
-        if entity.left:
-            keys.append('left')
-        if entity.right:
-            keys.append('right')
-        entity.box2d_car.update(keys, dt)
+        entity.box2d_car.update(entity.steering_angle, entity.desired_speed, dt)
 
         entity.x = entity.box2d_car.body.position.x
         entity.y = entity.box2d_car.body.position.y
         entity.angle = math.degrees(entity.box2d_car.body.angle) + 90
 
 
-        # engine.get_engine().entity_manager.update_position(entity)
-
-
-
-
     def handle_input(self, entity, action, value):
-        if action == 'gas' and value == 1:
-            entity.gas = True
-        elif action == 'gas' and value == 0:
-            entity.gas = False
-        elif action == 'break' and value == 1:
-            entity.breaks = True
-        elif action == 'break' and value == 0:
-            entity.breaks = False
-        elif action == 'steer' and value == -1:
-            entity.left = True
-        elif action == 'steer' and value == 1:
-            entity.right = True
-        elif action == 'steer' and value == 0:
-            entity.left = False
-            entity.right = False
+        if action == 'gas':
+            entity.desired_speed = entity.max_forward_speed * value
+        elif action == 'break':
+            entity.desired_speed = entity.max_backward_speed * value
+        elif action == 'steer':
+            entity.steering_angle = entity.max_steering_angle * -value

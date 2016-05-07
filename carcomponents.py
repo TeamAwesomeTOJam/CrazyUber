@@ -3,6 +3,8 @@ from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
 
+import box2dcar
+
 import math
 
 class CarPhysicsComponent(Component):
@@ -85,3 +87,56 @@ class InputEngineComponent(Component):
         elif (action == 'left' or action == 'right') and value == 0:
             entity.steering_angle = 0
 
+
+class Box2dCarComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, [('gas', 0), ('breaks', 0), ('left', 0), ('right', 0)])
+        entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world)
+
+        entity.register_handler('input', self.handle_input)
+        entity.register_handler('update', self.handle_update)
+
+
+    def remove(self, entity):
+        entity.unregister_handler('input', self.handle_input)
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        keys = []
+        if entity.gas:
+            keys.append('up')
+        if entity.breaks:
+            keys.append('down')
+        if entity.left:
+            keys.append('left')
+        if entity.right:
+            keys.append('right')
+        entity.box2d_car.update(keys, dt)
+
+        entity.x = entity.box2d_car.body.position.x
+        entity.y = entity.box2d_car.body.position.y
+        entity.angle = math.degrees(entity.box2d_car.body.angle)
+
+        engine.get_engine().entity_manager.update_position(entity)
+
+
+
+
+    def handle_input(self, entity, action, value):
+        if action == 'gas' and value == 1:
+            entity.gas = True
+        elif action == 'gas' and value == 0:
+            entity.gas = False
+        elif action == 'break' and value == 1:
+            entity.breaks = True
+        elif action == 'break' and value == 0:
+            entity.breaks = False
+        elif action == 'left' and value == 1:
+            entity.left = True
+        elif action == 'right' and value == 1:
+            entity.right = True
+        elif action == 'left' and value == 0:
+            entity.left = False
+        elif action == 'right' and value == 0:
+            entity.right = False

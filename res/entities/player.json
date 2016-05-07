@@ -5,7 +5,7 @@
   "height": 100,
   "angle": 90,
   "name": "player",
-  "components": ["DrawHitBoxComponent", "VelocityMoveComponent", "CarPhysicsComponent", "InputEngineComponent"],
+  "components": ["DrawHitBoxComponent", "Box2dCarComponent"],
   "tags": ["draw", "update"],
 
   "mass" : 1,

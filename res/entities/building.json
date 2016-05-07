@@ -1,7 +1,8 @@
 {
   "x": 100,
   "y": 100,
-  "width": 50,
-  "height": 50,
-  "components": ["StaticBoxComponent","DrawHitBoxComponent"]
+  "width": 18,
+  "height": 18,
+  "components": ["StaticBoxComponent","DrawHitBoxComponent"],
+  "tags": ["terrain"]
 }

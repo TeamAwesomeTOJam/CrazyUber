@@ -4,7 +4,7 @@
   "width": 20,
   "height": 20,
   "image": "grass.png",
-  "friction": 0.1,
+  "friction": 0.5,
   "components": ["SurfaceComponent", "DrawScaledImageComponent"],
-  "tags": ["terrain"]
+  "tags": ["terrain", "grass"]
 }

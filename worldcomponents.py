@@ -18,8 +18,25 @@ class StaticBoxComponent(Component):
 
         r = rectangle.from_entity(entity)
 
-        body = world.CreateStaticBody(position = r.center)
+        body = world.CreateStaticBody(position=r.center, userData={'entity': entity})
         body.CreatePolygonFixture(vertices=r.corners)
 
     def remove(self, entity):
         pass
+        
+
+class SurfaceComponent(Component):
+    
+    def add(self, entity):
+        verify_attrs(entity, ['x', 'y', 'width', 'height', 'friction'])
+        
+        world = engine.get_engine().box2d_world
+        r = rectangle.from_entity(entity)
+        body = world.CreateStaticBody(position=r.center, userData={'entity': entity})
+        fixture = body.CreatePolygonFixture(vertices=r.corners)
+        fixture.sensor = True
+        
+    def remove(self, entity):
+        pass
+        
+        

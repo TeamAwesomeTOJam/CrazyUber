@@ -1,7 +1,7 @@
 {
-  "x": 500,
-  "y": 500,
-  "width": 500,
-  "height": 500,
-  "components": ["StaticBoxComponent"]
+  "x": 100,
+  "y": 100,
+  "width": 50,
+  "height": 50,
+  "components": ["StaticBoxComponent","DrawHitBoxComponent"]
 }

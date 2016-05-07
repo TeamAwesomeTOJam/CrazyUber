@@ -1,10 +1,16 @@
 {
-  "KEY KeyCode.escape": ["ENGINE", "QUIT"],
+  "KeyCode.escape": ["ENGINE", "QUIT"],
 
-  "KEY KeyCode.return_": ["attract-manager", "play"],
+  "KeyCode.return_": ["attract-manager", "play"],
 
-  "KEY KeyCode.w" : ["player", "gas"],
-  "KEY KeyCode.s" : ["player", "break"],
-  "KEY KeyCode.a" : ["player", "left"],
-  "KEY KeyCode.d" : ["player", "right"]
+  "KeyCode.w" : ["player", "gas"],
+  "KeyCode.s" : ["player", "break"],
+  "KeyCode.a" : ["player", "left"],
+  "KeyCode.d" : ["player", "right"],
+  
+  "0 ControllerButton.start" : ["attract-manager", "play"],
+  "0 ControllerButton.a" : ["player", "gas"],
+  "0 ControllerButton.b" : ["player", "break"],
+  "0 ControllerButton.dpad_left" : ["player", "left"],
+  "0 ControllerButton.dpad_right" : ["player", "right"]
 }

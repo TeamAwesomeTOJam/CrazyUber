@@ -72,20 +72,12 @@ class InputEngineComponent(Component):
         entity.unregister_handler('input', self.handle_input)
 
     def handle_input(self, entity, action, value):
-        if action == 'gas' and value == 1:
-            entity.engine_force = entity.base_engine_force
-        elif action == 'gas' and value == 0:
-            entity.engine_force = 0
-        elif action == 'break' and value == 1:
-            entity.breaking_force = entity.base_breaking_force
-        elif action == 'break' and value == 0:
-            entity.breaking_force = 0
-        elif action == 'left' and value == 1:
-            entity.steering_angle = entity.max_steering_angle
-        elif action == 'right' and value == 1:
-            entity.steering_angle = -entity.max_steering_angle
-        elif (action == 'left' or action == 'right') and value == 0:
-            entity.steering_angle = 0
+        if action == 'gas':
+            entity.engine_force = entity.base_engine_force * value
+        elif action == 'break':
+            entity.breaking_force = entity.base_breaking_force * value
+        elif action == 'steer':
+            entity.steering_angle = entity.max_steering_angle * -value
 
 
 class Box2dCarComponent(Component):

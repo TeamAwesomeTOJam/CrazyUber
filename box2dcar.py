@@ -65,6 +65,8 @@ class TDTire(object):
                              self.body.worldCenter, True)
 
     def update_drive(self, desired_speed):
+        if desired_speed == 0:
+            return
 
         # find the current speed in the forward direction
         current_forward_normal = self.body.GetWorldVector((0, 1))

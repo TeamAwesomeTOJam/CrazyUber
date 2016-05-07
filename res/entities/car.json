@@ -8,8 +8,8 @@
   "tags": ["update", "draw"],
 
   "max_steering_angle": 40,
-  "engine_force": 300,
-  "max_forward_speed": 200,
+  "engine_force": 150,
+  "max_forward_speed": 100,
   "max_backward_speed": -20,
-  "max_lateral_impulse": 6
+  "max_lateral_impulse": 3
 }

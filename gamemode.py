@@ -5,6 +5,8 @@ class GameMode(awesomeengine.mode.Mode):
     def enter(self):
         e = awesomeengine.get_engine()
 
+        e.add_entity('road', x=0, y=0)
+
         building = e.add_entity('building')
 
         player = e.add_entity('player')

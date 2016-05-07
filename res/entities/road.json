@@ -4,5 +4,6 @@
   "width": 20,
   "height": 20,
   "image": "road.png",
-  "components": ["DrawScaledImageComponent"]
+  "components": ["DrawScaledImageComponent"],
+  "tags": ["terrain"]
 }

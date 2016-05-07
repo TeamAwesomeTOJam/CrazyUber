@@ -3,7 +3,8 @@
   "y": 0,
   "width": 20,
   "height": 20,
-  "image": "road.png",
+  "image": "grass.png",
   "friction": 0.1,
-  "components": ["SurfaceComponent", "DrawScaledImageComponent"]
+  "components": ["SurfaceComponent", "DrawScaledImageComponent"],
+  "tags": ["terrain"]
 }

@@ -31,8 +31,8 @@ class SurfaceComponent(Component):
         verify_attrs(entity, ['x', 'y', 'width', 'height', 'friction'])
         
         world = engine.get_engine().box2d_world
-        r = rectangle.Rect(0,0,entity.width, entity.height)
-        body = world.CreateStaticBody(position=(entity.x, entity.y), userData={'entity': entity})
+        r = rectangle.Rect(0, 0, entity.width, entity.height)
+        body = world.CreateStaticBody(position=(entity.x, entity.y), allowSleep=True, awake=False, userData={'entity': entity})
         fixture = body.CreatePolygonFixture(vertices=r.corners)
         fixture.sensor = True
         

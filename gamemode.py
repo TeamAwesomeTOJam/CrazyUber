@@ -5,7 +5,9 @@ class GameMode(awesomeengine.mode.Mode):
     def enter(self):
         e = awesomeengine.get_engine()
 
-        e.add_entity('road', x=0, y=0)
+        for i in range(-50, 50):
+            for j in range(-50, 50):
+                e.add_entity('grass', x=i*20, y=j*20)
 
         building = e.add_entity('building')
 
@@ -20,9 +22,10 @@ class GameMode(awesomeengine.mode.Mode):
 
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
+                                      awesomeengine.layer.SimpleCroppedLayer('terrain'),
                                       awesomeengine.layer.GridLayer((200,200,200,255), 100),
                                       awesomeengine.layer.PhysicsLayer(),
-                                      awesomeengine.layer.DepthSortedLayer('draw')],
+                                      awesomeengine.layer.SimpleCroppedLayer('draw')],
                               hud=[])
 
         self.cams = [cam]

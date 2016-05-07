@@ -84,37 +84,18 @@ class TDTire(object):
         self.body.ApplyForce(self.current_traction * force * current_forward_normal,
                              self.body.worldCenter, True)
 
-    # def update_turn(self, keys):
-    #     if 'left' in keys:
-    #         desired_torque = self.turn_torque
-    #     elif 'right' in keys:
-    #         desired_torque = -self.turn_torque
-    #     else:
-    #         return
-    #
-    #     self.body.ApplyTorque(desired_torque, True)
-
-    def add_ground_area(self, ud):
-        if ud not in self.ground_areas:
-            self.ground_areas.append(ud)
-            self.update_traction()
-
-    def remove_ground_area(self, ud):
-        if ud in self.ground_areas:
-            self.ground_areas.remove(ud)
-            self.update_traction()
-
     def update_traction(self):
-        if not self.ground_areas:
-            self.current_traction = 1
+        friction_coeffecients = []
+        for contact_edge in self.body.contacts:
+            entity = contact_edge.other.userData.get('entity', None)
+            if hasattr(entity, 'friction'):
+                friction_coeffecients.append(entity.friction)
+           
+        if len(friction_coeffecients) > 0:
+            self.current_traction = max(friction_coeffecients)
         else:
-            self.current_traction = 0
-            mods = [ga.friction_modifier for ga in self.ground_areas]
-
-            max_mod = max(mods)
-            if max_mod > self.current_traction:
-                self.current_traction = max_mod
-
+            self.current_traction = 1
+            
 
 class TDCar(object):
     # vertices = [(1.5, 0.0),
@@ -172,6 +153,7 @@ class TDCar(object):
 
     def update(self, steering_angle, desired_speed, hz):
         for tire in self.tires:
+            tire.update_traction()
             tire.update_friction()
 
         for tire in self.tires:

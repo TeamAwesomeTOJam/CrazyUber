@@ -84,7 +84,10 @@ class Box2dCarComponent(Component):
 
     def add(self, entity):
         verify_attrs(entity, [('gas', 0), ('breaks', 0), ('left', 0), ('right', 0)])
-        entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world)
+        entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
+                                          max_forward_speed=200,
+                                          max_drive_force=300,
+                                          max_lateral_impulse=6)
 
         entity.register_handler('input', self.handle_input)
         entity.register_handler('update', self.handle_update)

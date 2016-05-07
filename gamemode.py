@@ -24,7 +24,7 @@ class GameMode(awesomeengine.mode.Mode):
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
                                       awesomeengine.layer.SimpleCroppedLayer('terrain'),
                                       awesomeengine.layer.GridLayer((200,200,200,255), 100),
-                                      awesomeengine.layer.PhysicsLayer(),
+                                      # awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
                               hud=[])
 

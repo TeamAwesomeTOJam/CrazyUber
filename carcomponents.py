@@ -108,9 +108,10 @@ class Box2dCarComponent(Component):
 
         entity.x = entity.box2d_car.body.position.x
         entity.y = entity.box2d_car.body.position.y
-        entity.angle = math.degrees(entity.box2d_car.body.angle)
+        entity.angle = math.degrees(entity.box2d_car.body.angle) + 90
 
-        engine.get_engine().entity_manager.update_position(entity)
+
+        # engine.get_engine().entity_manager.update_position(entity)
 
 
 
@@ -124,11 +125,10 @@ class Box2dCarComponent(Component):
             entity.breaks = True
         elif action == 'break' and value == 0:
             entity.breaks = False
-        elif action == 'left' and value == 1:
+        elif action == 'steer' and value == -1:
             entity.left = True
-        elif action == 'right' and value == 1:
+        elif action == 'steer' and value == 1:
             entity.right = True
-        elif action == 'left' and value == 0:
+        elif action == 'steer' and value == 0:
             entity.left = False
-        elif action == 'right' and value == 0:
             entity.right = False

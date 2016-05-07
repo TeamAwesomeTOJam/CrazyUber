@@ -5,6 +5,7 @@ import attractmodecomponents
 import cameracomponets
 import playercomponents
 import carcomponents
+import worldcomponents
 
 if __name__ == '__main__':
 
@@ -13,6 +14,7 @@ if __name__ == '__main__':
     engine.component_manager.register_module(cameracomponets)
     engine.component_manager.register_module(playercomponents)
     engine.component_manager.register_module(carcomponents)
+    engine.component_manager.register_module(worldcomponents)
 
     engine.create_box2d_world((0,0))
 

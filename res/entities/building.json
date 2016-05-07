@@ -3,6 +3,5 @@
   "y": 500,
   "width": 500,
   "height": 500,
-  "components": ["DrawHitBoxComponent"],
-  "tags": ["draw"]
+  "components": ["StaticBoxComponent"]
 }

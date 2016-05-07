@@ -27,18 +27,20 @@ class GameMode(awesomeengine.mode.Mode):
 
         self.entities = [player_cam_entity, player]
 
-        road = list(e.entity_manager.get_by_tag('road'))
-        print len(road)
-        random.shuffle(road)
-        for tile in road[:50]:
-            self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, follow=player))
+        # road = list(e.entity_manager.get_by_tag('road'))
+        # random.shuffle(road)
+        # for tile in road[:50]:
+        for y in range(50):
+            self.entities.append(e.add_entity('civilian-car', x=0, y=-20-20*y, follow=player))
 
-        e.entity_manager.commit_changes()        
-        
+
+        e.entity_manager.commit_changes()
+
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
                                       awesomeengine.layer.SimpleCroppedLayer('terrain'),
-                                      #awesomeengine.layer.PhysicsLayer(),
+                                      awesomeengine.layer.SimpleCroppedLayer('building'),
+                                      # awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
                               hud=[])
         self.cams = [cam]

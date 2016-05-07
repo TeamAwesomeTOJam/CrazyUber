@@ -14,6 +14,8 @@ if __name__ == '__main__':
     engine.component_manager.register_module(playercomponents)
     engine.component_manager.register_module(carcomponents)
 
+    engine.create_box2d_world((0,0))
+
     engine.add_mode('attract', attractmode.AttractMode())
     engine.add_mode('game', gamemode.GameMode())
 

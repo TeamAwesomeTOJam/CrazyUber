@@ -5,10 +5,12 @@ class GameMode(awesomeengine.mode.Mode):
     def enter(self):
         e = awesomeengine.get_engine()
 
+        building = e.add_entity('building')
+
         player = e.add_entity('player')
         player_cam_entity = e.add_entity('player-cam', target=player)
 
-        self.entities = [player_cam_entity, player]
+        self.entities = [player_cam_entity, player, building]
 
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),

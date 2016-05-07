@@ -42,15 +42,15 @@ class CarPhysicsComponent(Component):
 
         f = entity.engine_force
 
-        if entity.velocity > 0:
-            f -= entity.breaking_force
+        # if entity.velocity > 0:
+        f -= entity.breaking_force
 
-        f -= entity.drag_coefficient * entity.velocity * entity.velocity
+        f -= entity.drag_coefficient * entity.velocity * math.fabs(entity.velocity)
         f -= entity.rolling_coefficient * entity.velocity
 
         new_velocity = entity.velocity + dt * f / entity.mass
-        if new_velocity < 0:
-            new_velocity = 0
+        # if new_velocity < 0:
+        #     new_velocity = 0
 
         entity.vx = new_velocity * math.cos(math.radians(entity.angle))
         entity.vy = new_velocity * math.sin(math.radians(entity.angle))

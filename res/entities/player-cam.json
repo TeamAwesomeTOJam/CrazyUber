@@ -1,13 +1,13 @@
 {
   "x": 0,
   "y": 0,
-  "width": 192,
-  "height": 108,
+  "width": 256,
+  "height": 144,
 
   "screen_x": 0,
   "screen_y": 0,
-  "screen_width": 1920,
-  "screen_height": 1080,
+  "screen_width": 2560,
+  "screen_height": 1440,
 
   "angle": 0,
 

@@ -24,7 +24,7 @@ def go():
     engine.add_mode('attract', attractmode.AttractMode())
     engine.add_mode('game', gamemode.GameMode())
 
-    engine.create_window((1600, 900), title='CrazyUber')
+    engine.create_window((2560, 1440), title='CrazyUber')
     engine.change_mode('attract')
 
     engine.run()

@@ -22,15 +22,20 @@ class GameMode(awesomeengine.mode.Mode):
 
 
         corners = list(e.entity_manager.get_by_tag('corner'))
-        random.shuffle(corners)
+        # random.shuffle(corners)
 
         print len(corners)
 
-        for tile in corners[:150]:
+
+        only_road = list(e.entity_manager.get_by_tag('road') - e.entity_manager.get_by_tag('corner'))
+        random.shuffle(only_road)
+        num_taxi = 75
+        for tile in only_road[:num_taxi]:
+            self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
+
+        for tile in corners:
             self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
 
-        for tile in corners[150:200]:
-            self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
 
         player_cam_entity = e.add_entity('player-cam', target=player)
@@ -55,7 +60,7 @@ class GameMode(awesomeengine.mode.Mode):
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
                               hud=[score_display, timer, fare, cash])
         self.cams = [cam]
-        
+
         self.music = e.resource_manager.get('sound', 'music')
         self.music.play(loops=-1)
         self.ambient = e.resource_manager.get('sound', 'ambience')

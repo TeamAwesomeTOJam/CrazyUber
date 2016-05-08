@@ -31,6 +31,7 @@ class GameMode(awesomeengine.mode.Mode):
         #     self.entities.append(e.add_entity('civilian-car', x=player.x-20-20*y, y=player.y, follow=player))
 
         score_display = e.add_entity('score-display')
+        timer = e.add_entity('timer')
 
 
         e.entity_manager.commit_changes()
@@ -42,7 +43,7 @@ class GameMode(awesomeengine.mode.Mode):
                                       awesomeengine.layer.SimpleCroppedLayer('building'),
                                       # awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
-                              hud=[score_display])
+                              hud=[score_display, timer])
         self.cams = [cam]
         
 

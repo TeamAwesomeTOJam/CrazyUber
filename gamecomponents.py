@@ -92,3 +92,19 @@ class ScoreComponent(Component):
 
     def handle_update(self, entity, dt):
         entity.text = 'Trips Made: {}'.format(entity.score)
+
+class TimerComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, ['time'])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        entity.time -= dt
+        if entity.time < 0:
+            entity.time = 0
+        entity.text = '{}:{:05.2f}'.format(int(entity.time)/60, entity.time % 60)

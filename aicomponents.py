@@ -174,7 +174,7 @@ class RoamComponent(Component):
             corners = e.entity_manager.get_in_area('corner', rectangle.from_entity(entity))
 
             if entity.next_corner in corners:
-                print entity.next_corner.next_corners
+                # print entity.next_corner.next_corners
                 entity.next_corner = random.choice(entity.next_corner.next_corners)
 
             entity.target = (entity.next_corner.x, entity.next_corner.y)

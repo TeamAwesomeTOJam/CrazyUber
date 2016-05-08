@@ -44,6 +44,10 @@ class GameMode(awesomeengine.mode.Mode):
                               hud=[score_display, timer])
         self.cams = [cam]
         
+        self.music = e.resource_manager.get('sound', 'music')
+        self.music.play(loops=-1)
+        self.ambient = e.resource_manager.get('sound', 'ambience')
+        self.ambient.play(loops=-1)
 
     def leave(self):
         e = awesomeengine.get_engine()
@@ -51,3 +55,5 @@ class GameMode(awesomeengine.mode.Mode):
             e.remove_camera(cam)
         for ent in self.entities:
             e.remove_entity(ent)
+            
+        sdl2hl.mixer.ALL_CHANNELS.halt()

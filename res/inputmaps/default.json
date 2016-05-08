@@ -1,6 +1,7 @@
 {
   "KeyCode.escape": ["ENGINE", "QUIT"],
   "KeyCode.r": ["ENGINE", "CLEAR"],
+  "KeyCode.f": ["ENGINE", "FULLSCREEN"],
 
   "KeyCode.return_": ["attract-manager", "play"],
 

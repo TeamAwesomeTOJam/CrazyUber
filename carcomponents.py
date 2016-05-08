@@ -81,4 +81,13 @@ class CarDrawComponent(Component):
 
         camera.draw_rect(entity.colour, rect)
 
+class RandomImageChooserComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, ['images'])
+        entity.image = random.choice(entity.images)
+        
+    def remove(self, entity):
+        pass
+        
 

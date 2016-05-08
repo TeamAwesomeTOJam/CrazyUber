@@ -1,8 +1,5 @@
 {
-  "x": 100,
-  "y": 100,
+  "includes": ["building"],
   "width": 80,
-  "height": 80,
-  "components": ["StaticBoxComponent","DrawHitBoxComponent"],
-  "tags": ["building"]
+  "height": 80
 }

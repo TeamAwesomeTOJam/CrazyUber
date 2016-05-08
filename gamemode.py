@@ -5,16 +5,8 @@ import awesomeengine
 class GameMode(awesomeengine.mode.Mode):
 
     def enter(self):
-        e = awesomeengine.get_engine()
-
-        for i in range(-100, 100):
-            for j in range(-100, 100):
-                if i%8 == 0 or (i-1) %8 == 0 or j%8 == 0 or (j-1)%8 == 0:
-                    e.add_entity('road', x=i*20, y=j*20)
-                else:
-                    e.add_entity('grass', x=i*20, y=j*20)
-
-        e.entity_manager.commit_changes()    
+        e = awesomeengine.get_engine()    
+        e.add_entities_from_map('map1')
         
         grass = list(e.entity_manager.get_by_tag('grass'))
         random.shuffle(grass)

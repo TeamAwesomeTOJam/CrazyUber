@@ -2,12 +2,13 @@
   "x": 0,
   "y": 0,
   "angle": 0,
-  "components+": ["GoToPointComponent", "RoamComponent", "BackUpComponent", "CivilianAiManagerCompoenent"],
+  "components+": ["GoToPointComponent", "RoamComponent", "BackUpComponent", "CivilianAiManagerCompoenent", "RandomImageChooserComponent"],
 
   "target": [200,200],
 
   "includes" : ["car"],
   "slow_on_approach": true,
 
-  "image": "SedanWhite.png"
+  "images": ["SedanBlue.png", "SedanOrange.png", "SedanRed.png", "SedanWhite.png"],
+  "image": "SedanBlue.png"
 }

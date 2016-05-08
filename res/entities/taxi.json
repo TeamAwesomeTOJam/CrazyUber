@@ -8,7 +8,6 @@
 
   "includes" : ["car"],
 
-  "colour": [255,255,0,255],
   "image": "Taxi.png",
 
   "max_steering_angle": 40,

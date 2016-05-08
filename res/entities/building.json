@@ -1,8 +1,7 @@
 {
-  "x": 100,
-  "y": 100,
   "width": 40,
   "height": 40,
-  "components": ["StaticBoxComponent","DrawHitBoxComponent"],
+  "image": "building.png",
+  "components": ["StaticBoxComponent", "DrawScaledImageComponent"],
   "tags": ["building"]
 }

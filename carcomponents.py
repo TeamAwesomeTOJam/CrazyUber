@@ -7,6 +7,7 @@ from awesomeengine import rectangle
 import box2dcar
 
 import math
+import random
 
 class InputCarComponent(Component):
 
@@ -32,13 +33,14 @@ class Box2dCarComponent(Component):
     def add(self, entity):
         verify_attrs(entity, ['x', 'y', ('max_lateral_impulse', 3), 'max_steering_angle', 'engine_force', ('steering_angle', 0), 'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)] )
         entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
+                                          entity=entity,
                                           max_drive_force = entity.engine_force,
                                           max_lateral_impulse= entity.max_lateral_impulse,
                                           position=(entity.x, entity.y))
         entity.box2d_car.set_awake(False)
 
         entity.register_handler('update', self.handle_update)
-
+        entity.register_handler('contact', self.handle_contact)
 
     def remove(self, entity):
         entity.unregister_handler('update', self.handle_update)
@@ -50,6 +52,16 @@ class Box2dCarComponent(Component):
         entity.angle = math.degrees(entity.box2d_car.body.angle) + 90
 
         engine.get_engine().entity_manager.update_position(entity)
+        
+    def handle_contact(self, entity, other, primary):
+        crash_sounds = ('crash1', 'crash2')
+    
+        player = engine.get_engine().entity_manager.get_by_name('player')
+        if (player.x - entity.x)**2 + (player.y - entity.y) ** 2 < 10000:
+            try:
+                engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+            except:
+                pass       
 
 class CarDrawComponent(Component):
 

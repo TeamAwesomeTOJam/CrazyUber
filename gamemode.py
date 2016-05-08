@@ -21,18 +21,17 @@ class GameMode(awesomeengine.mode.Mode):
         self.entities =[ player]
 
 
-        # for tile in road[:50]:
-        #     self.entities.append(e.add_entity('taxi', x= tile.x, y = tile.y, follow=player))
         corners = list(e.entity_manager.get_by_tag('corner'))
         random.shuffle(corners)
 
         print len(corners)
 
-        for tile in corners[:150]:
-            self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
+        # for tile in corners[:150]:
+        #     self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
+        #
+        # for tile in corners[150:200]:
+        #     self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
-        for tile in corners[150:200]:
-            self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
         player_cam_entity = e.add_entity('player-cam', target=player)
         update_rect = e.add_entity('update-rect',target=player)
@@ -42,7 +41,9 @@ class GameMode(awesomeengine.mode.Mode):
         e.add_update_layer('update', update_rect)
 
         score_display = e.add_entity('score-display')
+        fare = e.add_entity('fare')
         timer = e.add_entity('timer')
+        cash = e.add_entity('cash')
 
         e.entity_manager.commit_changes()
 
@@ -52,7 +53,7 @@ class GameMode(awesomeengine.mode.Mode):
                                       awesomeengine.layer.SimpleCroppedLayer('building'),
                                       #awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
-                              hud=[score_display, timer])
+                              hud=[score_display, timer, fare, cash])
         self.cams = [cam]
         
         self.music = e.resource_manager.get('sound', 'music')

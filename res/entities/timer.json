@@ -7,5 +7,6 @@
   "components" : ["DynamicTextComponent", "TimerComponent"],
   "tags" : ["draw", "always_update"],
   "name" : "timer",
-  "time" : 300
+  "time" : 0,
+  "time_per_distatnce" : 0.05
 }

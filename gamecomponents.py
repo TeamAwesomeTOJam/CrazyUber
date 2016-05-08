@@ -19,12 +19,17 @@ class PasangerPickupComponent(Component):
         entity.unregister_handler('update', self.handle_update)
 
     def handle_update(self, entity, dt):
-
+        e = engine.get_engine()
         if entity.pickup_target is not None:
             targets = engine.get_engine().entity_manager.get_in_area('pickup_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.pickup_target:
-                    e = engine.get_engine()
+
+                    fare = e.entity_manager.get_by_name('fare')
+                    fare.active = True
+
+                    start = Vec2d(entity.pickup_target.x, entity.pickup_target.y)
+
                     e.remove_entity(entity.pickup_target)
                     entity.pickup_target = None
                     road = list(e.entity_manager.get_by_tag('road'))
@@ -32,13 +37,37 @@ class PasangerPickupComponent(Component):
                     r = road[0]
                     new_target = engine.get_engine().add_entity('dropoff-zone', x=r.x, y=r.y)
                     entity.dropoff_target = new_target
-                    break
+
+                    end = Vec2d(new_target.x, new_target.y)
+
+                    d = start.get_distance(end)
+
+                    timer = e.entity_manager.get_by_name('timer')
+                    timer.time = timer.time_per_distatnce * d
+
+
+
+                    return
 
         elif entity.dropoff_target is not None:
             targets = engine.get_engine().entity_manager.get_in_area('dropoff_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.dropoff_target:
-                    e = engine.get_engine()
+
+
+                    fare = e.entity_manager.get_by_name('fare')
+                    fare.active = False
+                    timer = e.entity_manager.get_by_name('timer')
+                    cash = e.entity_manager.get_by_name('cash')
+                    time_left = timer.time
+
+                    earned = fare.fare + time_left * fare.bonus_rate
+                    cash.amount += earned
+
+                    timer.time = 0
+                    fare.fare =0
+
+
                     e.remove_entity(entity.dropoff_target)
                     entity.dropoff_target = None
                     road = list(e.entity_manager.get_by_tag('road'))
@@ -47,7 +76,22 @@ class PasangerPickupComponent(Component):
                     new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
                     entity.pickup_target = new_target
                     e.entity_manager.get_by_name('score').score += 1
-                    break
+                    return
+
+            timer = e.entity_manager.get_by_name('timer')
+            if timer.time == 0:
+                fare = e.entity_manager.get_by_name('fare')
+                fare.fare = 0
+                fare.active = False
+                timer.time = 0
+                e.remove_entity(entity.dropoff_target)
+                entity.dropoff_target = None
+                road = list(e.entity_manager.get_by_tag('road'))
+                random.shuffle(road)
+                r = road[0]
+                new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
+                entity.pickup_target = new_target
+                return
 
 class DrawPickupArrowComponent(Component):
 
@@ -96,7 +140,7 @@ class ScoreComponent(Component):
 class TimerComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, ['time'])
+        verify_attrs(entity, ['time', 'time_per_distatnce'])
 
         entity.register_handler('update', self.handle_update)
 
@@ -107,7 +151,10 @@ class TimerComponent(Component):
         entity.time -= dt
         if entity.time < 0:
             entity.time = 0
-        entity.text = '{}:{:05.2f}'.format(int(entity.time)/60, entity.time % 60)
+        if entity.time > 0:
+            entity.text = '{}:{:05.2f}'.format(int(entity.time)/60, entity.time % 60)
+        else:
+            entity.text = ''
 
 class CarSleepComponent(Component):
 
@@ -128,3 +175,32 @@ class CarSleepComponent(Component):
 
         for e in to_wake:
             e.box2d_car.set_awake(True)
+
+
+class FareComponent(Component):
+    def add(self, entity):
+        verify_attrs(entity, [('active', False), ('fare', 0), 'rate'])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        if entity.active:
+            entity.fare += dt*entity.rate
+            entity.text = '${:.2f}'.format(entity.fare)
+        else:
+            entity.text = ''
+
+class Cash(Component):
+    def add(self, entity):
+        verify_attrs(entity, ['amount'])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        entity.text = 'Cash: ${:.2f}'.format(entity.amount)

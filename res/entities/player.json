@@ -3,7 +3,7 @@
   "y": 0,
   "angle": 0,
   "name": "player",
-  "components+": ["InputCarComponent"],
+  "components+": ["InputCarComponent", "PasangerPickupComponent", "DrawPickupArrowComponent"],
 
   "includes" : ["car"],
 

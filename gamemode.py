@@ -14,14 +14,16 @@ class GameMode(awesomeengine.mode.Mode):
                 else:
                     e.add_entity('grass', x=i*20, y=j*20)
 
-        e.entity_manager.commit_changes()    
-        
+        e.entity_manager.commit_changes()
+
         grass = list(e.entity_manager.get_by_tag('grass'))
         random.shuffle(grass)
         for tile in grass[:10000]:
             e.add_entity('building', x=tile.x, y=tile.y)
 
-        player = e.add_entity('player')
+        zone = e.add_entity('pickup-zone')
+
+        player = e.add_entity('player', pickup_target=zone)
         player_cam_entity = e.add_entity('player-cam', target=player)
 
 
@@ -31,7 +33,9 @@ class GameMode(awesomeengine.mode.Mode):
         # random.shuffle(road)
         # for tile in road[:50]:
         for y in range(50):
+
             self.entities.append(e.add_entity('civilian-car', x=0, y=-20-20*y, follow=player))
+
 
 
         e.entity_manager.commit_changes()

@@ -1,0 +1,8 @@
+{
+  "x": 0,
+  "y": 300,
+  "width": 20,
+  "height": 20,
+  "components": ["DrawHitBoxComponent"],
+  "tags": ["draw", "pickup_zone"]
+}

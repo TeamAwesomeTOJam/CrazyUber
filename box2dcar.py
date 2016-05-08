@@ -121,7 +121,7 @@ class TDCar(object):
                     (2.5, 8.50-5),
                     ]
 
-    def __init__(self, world, vertices=None,
+    def __init__(self, world, entity=None, vertices=None,
                  tire_anchors=None, density=0.1, position=(0, 0),
                  **tire_kws):
         if vertices is None:
@@ -129,7 +129,7 @@ class TDCar(object):
 
         self.body = world.CreateDynamicBody(position=position)
         self.body.CreatePolygonFixture(vertices=vertices, density=density)
-        self.body.userData = {'obj': self}
+        self.body.userData = {'obj': self, 'entity': entity}
 
         self.tires = [TDTire(self, **tire_kws) for i in range(4)]
 

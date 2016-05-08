@@ -9,5 +9,5 @@
   "includes" : ["car"],
   "slow_on_approach": true,
 
-  "colour": [255,255,255,255]
+  "image": "SedanWhite.png"
 }

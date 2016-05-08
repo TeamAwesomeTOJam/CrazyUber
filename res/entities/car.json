@@ -4,7 +4,7 @@
   "width": 10,
   "height": 6,
   "angle": 0,
-  "components": ["Box2dCarComponent", "CarDrawComponent"],
+  "components": ["Box2dCarComponent", "DrawScaledImageComponent"],
   "tags": ["update", "draw", "car"],
 
   "max_steering_angle": 40,

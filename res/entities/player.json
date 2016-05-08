@@ -13,5 +13,5 @@
   "max_backward_speed": -20,
   "max_lateral_impulse": 6,
 
-  "colour": [0,0,0,255]
+  "image": "BlackCar.png"
 }

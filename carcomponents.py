@@ -57,7 +57,7 @@ class Box2dCarComponent(Component):
         crash_sounds = ('crash1', 'crash2')
     
         player = engine.get_engine().entity_manager.get_by_name('player')
-        if (player.x - entity.x)**2 + (player.y - entity.y) ** 2 < 10000:
+        if primary and ((player.x - entity.x)**2 + (player.y - entity.y) ** 2) < 10000:
             try:
                 engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
             except:

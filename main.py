@@ -27,6 +27,8 @@ def go():
     engine.create_window((2560, 1440), title='CrazyUber')
     engine.change_mode('attract')
 
+    engine.window.set_fullscreen(True)
+
     engine.run()
 
 if __name__ == '__main__':

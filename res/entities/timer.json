@@ -1,5 +1,5 @@
 {
-  "topleft": [960, 1000],
+  "topleft": [960, 1400],
   "font": "LiberationSans-Regular",
   "text": "Score",
   "size": 50,
@@ -8,5 +8,5 @@
   "tags" : ["draw", "always_update"],
   "name" : "timer",
   "time" : 0,
-  "time_per_distatnce" : 0.15
+  "time_per_distatnce" : 0.1
 }

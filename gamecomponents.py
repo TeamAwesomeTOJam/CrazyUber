@@ -107,7 +107,7 @@ class DrawPickupArrowComponent(Component):
     def handle_draw(self, entity, camera):
         if entity.pickup_target is not None:
             target = entity.pickup_target
-            c = (0,0,255,255)
+            c = (0,255,255,255)
         elif entity.dropoff_target is not None:
             target = entity.dropoff_target
             c = (255,0,255,255)

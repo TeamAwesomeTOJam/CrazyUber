@@ -3,8 +3,8 @@
   "y": 0,
   "width": 500,
   "height": 500,
-  "awake_width" : 20,
-  "awake_height" : 20,
+  "awake_width" : 400,
+  "awake_height" : 400,
 
   "angle": 0,
 

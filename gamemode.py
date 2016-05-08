@@ -29,7 +29,7 @@ class GameMode(awesomeengine.mode.Mode):
 
         only_road = list(e.entity_manager.get_by_tag('road') - e.entity_manager.get_by_tag('corner'))
         random.shuffle(only_road)
-        num_taxi = 75
+        num_taxi = 50
         for tile in only_road[:num_taxi]:
             self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
@@ -49,6 +49,7 @@ class GameMode(awesomeengine.mode.Mode):
         fare = e.add_entity('fare')
         timer = e.add_entity('timer')
         cash = e.add_entity('cash')
+        dropped = e.add_entity('pasangers-dropped')
 
         e.entity_manager.commit_changes()
 
@@ -58,7 +59,7 @@ class GameMode(awesomeengine.mode.Mode):
                                       awesomeengine.layer.SimpleCroppedLayer('building'),
                                       #awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
-                              hud=[score_display, timer, fare, cash])
+                              hud=[score_display, timer, fare, cash, dropped])
         self.cams = [cam]
 
         self.music = e.resource_manager.get('sound', 'music')

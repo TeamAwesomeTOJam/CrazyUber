@@ -13,7 +13,8 @@ class InputCarComponent(Component):
 
     def add(self, entity):
         verify_attrs(entity, ['max_steering_angle', ('steering_angle', 0),
-                              'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)])
+                              'max_forward_speed', 'max_backward_speed', ('desired_speed', 0), ('desired_forward_speed', 0),
+                              ('desired_backward_speed', 0)])
         entity.register_handler('input', self.handle_input)
 
     def remove(self, entity):
@@ -21,11 +22,13 @@ class InputCarComponent(Component):
 
     def handle_input(self, entity, action, value):
         if action == 'gas':
-            entity.desired_speed = entity.max_forward_speed * value
+            entity.desired_forward_speed = entity.max_forward_speed * value
         elif action == 'break':
-            entity.desired_speed = entity.max_backward_speed * value
+            entity.desired_backward_speed = entity.max_backward_speed * value
         elif action == 'steer':
             entity.steering_angle = entity.max_steering_angle * -value
+
+        entity.desired_speed = entity.desired_forward_speed + entity.desired_backward_speed
 
 
 class Box2dCarComponent(Component):

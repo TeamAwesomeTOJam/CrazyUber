@@ -8,5 +8,5 @@
   "tags" : ["draw", "always_update"],
   "name" : "timer",
   "time" : 0,
-  "time_per_distatnce" : 0.05
+  "time_per_distatnce" : 0.15
 }

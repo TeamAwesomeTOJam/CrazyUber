@@ -91,6 +91,7 @@ class PasangerPickupComponent(Component):
                 r = road[0]
                 new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
                 entity.pickup_target = new_target
+                e.entity_manager.get_by_name('dropped').dropped += 1
                 return
 
 class DrawPickupArrowComponent(Component):
@@ -136,6 +137,18 @@ class ScoreComponent(Component):
 
     def handle_update(self, entity, dt):
         entity.text = 'Trips Made: {}'.format(entity.score)
+
+class DroppedComponent(Component):
+    def add(self, entity):
+        verify_attrs(entity, [('dropped', 0)])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        entity.text = 'Trips Failed: {}'.format(entity.dropped)
 
 class TimerComponent(Component):
 

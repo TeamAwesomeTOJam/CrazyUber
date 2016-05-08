@@ -1,0 +1,10 @@
+{
+  "topleft": [20, 900],
+  "font": "LiberationSans-Regular",
+  "text": "Dropped",
+  "size": 50,
+  "colour": [255, 255, 255, 255],
+  "components" : ["DynamicTextComponent", "DroppedComponent"],
+  "tags" : ["draw", "always_update"],
+  "name" : "dropped"
+}

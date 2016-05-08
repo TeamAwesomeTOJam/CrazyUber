@@ -1,0 +1,12 @@
+{
+  "x": 0,
+  "y": 0,
+  "angle": 0,
+  "components+": ["GoToPointComponent", "RoamComponent", "BackUpComponent", "DrawTargetComponent"],
+
+  "target": [200,200],
+
+  "includes" : ["car"],
+
+  "colour": [255,255,0,255]
+}

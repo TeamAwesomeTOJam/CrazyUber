@@ -1,5 +1,6 @@
 import random
 import awesomeengine
+import cornergraph
 
 
 class GameMode(awesomeengine.mode.Mode):
@@ -7,6 +8,8 @@ class GameMode(awesomeengine.mode.Mode):
     def enter(self):
         e = awesomeengine.get_engine()
         e.add_entities_from_map('map1')
+
+        cornergraph.build_corner_graph()
 
         road = list(e.entity_manager.get_by_tag('road'))
         random.shuffle(road)
@@ -19,8 +22,13 @@ class GameMode(awesomeengine.mode.Mode):
         self.entities = [player_cam_entity, player]
 
 
-        for tile in road[:50]:
-            self.entities.append(e.add_entity('taxi', x= tile.x, y = tile.y, follow=player))
+        # for tile in road[:50]:
+        #     self.entities.append(e.add_entity('taxi', x= tile.x, y = tile.y, follow=player))
+        corners = list(e.entity_manager.get_by_tag('corner'))
+        random.shuffle(corners)
+        for tile in corners[:50]:
+            self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
+
 
         score_display = e.add_entity('score-display')
         timer = e.add_entity('timer')

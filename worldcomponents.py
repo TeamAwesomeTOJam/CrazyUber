@@ -40,3 +40,17 @@ class SurfaceComponent(Component):
         pass
         
         
+class DrawCornerGraphComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, ['x', 'y', ('next_corners', [])])
+
+        entity.register_handler('draw', self.handle_draw)
+
+    def remove(self, entity):
+        entity.unregister_handler('draw', self.handle_draw)
+
+    def handle_draw(self, entity, camera):
+        for c in entity.next_corners:
+            p = (c.x,c.y)
+            camera.draw_line((255,255,255,255), (entity.x, entity.y), p)

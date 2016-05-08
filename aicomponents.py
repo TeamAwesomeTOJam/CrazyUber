@@ -3,6 +3,7 @@ from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
 from awesomeengine import rectangle
+import random
 
 import collections
 
@@ -108,3 +109,40 @@ class BackUpComponent(Component):
         if entity.ai_mode == 'backup':
             entity.desired_speed = entity.max_backward_speed
             entity.steering_angle = 0
+
+class RoamComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, [('ai_mode', 'wait'), ('next_corner', None)])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        if entity.ai_mode == 'roam' and entity.next_corner is not None:
+
+            e = engine.get_engine()
+
+            corners = e.entity_manager.get_in_area('corner', rectangle.from_entity(entity))
+
+            if entity.next_corner in corners:
+                print entity.next_corner.next_corners
+                entity.next_corner = random.choice(entity.next_corner.next_corners)
+
+            entity.target = (entity.next_corner.x, entity.next_corner.y)
+        else:
+            entity.target = None
+
+class DrawTargetComponent(Component):
+    def add(self, entity):
+        verify_attrs(entity, ['x', 'y', 'target'])
+
+        entity.register_handler('draw', self.handle_draw)
+
+    def remove(self, entity):
+        entity.unregister_handler('draw', self.handle_draw)
+
+    def handle_draw(self, entity, camera):
+        camera.draw_line((255, 255, 255, 255), (entity.x, entity.y), entity.target)

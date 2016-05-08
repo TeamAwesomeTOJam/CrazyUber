@@ -1,3 +1,5 @@
+import random
+
 from awesomeengine.component import verify_attrs
 from awesomeengine.component import Component
 from awesomeengine import engine
@@ -22,9 +24,13 @@ class PasangerPickupComponent(Component):
             targets = engine.get_engine().entity_manager.get_in_area('pickup_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.pickup_target:
-                    engine.get_engine().remove_entity(entity.pickup_target)
+                    e = engine.get_engine()
+                    e.remove_entity(entity.pickup_target)
                     entity.pickup_target = None
-                    new_target = engine.get_engine().add_entity('dropoff-zone')
+                    road = list(e.entity_manager.get_by_tag('road'))
+                    random.shuffle(road)
+                    r = road[0]
+                    new_target = engine.get_engine().add_entity('dropoff-zone', x=r.x, y=r.y)
                     entity.dropoff_target = new_target
                     break
 
@@ -32,9 +38,13 @@ class PasangerPickupComponent(Component):
             targets = engine.get_engine().entity_manager.get_in_area('dropoff_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.dropoff_target:
-                    engine.get_engine().remove_entity(entity.dropoff_target)
+                    e = engine.get_engine()
+                    e.remove_entity(entity.dropoff_target)
                     entity.dropoff_target = None
-                    new_target = engine.get_engine().add_entity('pickup-zone')
+                    road = list(e.entity_manager.get_by_tag('road'))
+                    random.shuffle(road)
+                    r = road[0]
+                    new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
                     entity.pickup_target = new_target
                     break
 

@@ -53,7 +53,7 @@ class Box2dCarComponent(Component):
 class CarDrawComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, ['width', 'height'])
+        verify_attrs(entity, ['width', 'height', ('colour', (255,255, 0,255))])
 
         entity.register_handler('draw', self.handle_draw)
 
@@ -66,6 +66,6 @@ class CarDrawComponent(Component):
 
         rect = rectangle.Rect(x,y,entity.width, entity.height, angle)
 
-        camera.draw_rect((0,255,0,255), rect)
+        camera.draw_rect(entity.colour, rect)
 
 

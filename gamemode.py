@@ -25,10 +25,19 @@ class GameMode(awesomeengine.mode.Mode):
         #     self.entities.append(e.add_entity('taxi', x= tile.x, y = tile.y, follow=player))
         corners = list(e.entity_manager.get_by_tag('corner'))
         random.shuffle(corners)
-        for tile in corners[:50]:
+
+        for tile in corners[:25]:
             self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
 
-        player_cam_entity = e.add_entity('player-cam', target=self.entities[-1])
+        for tile in corners[25:50]:
+            self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
+
+        player_cam_entity = e.add_entity('player-cam', target=player)
+        update_rect = e.add_entity('update-rect',target=player)
+        awake_rect = e.add_entity('car-sleeper', target=player)
+
+        e.add_update_layer('always_update')
+        e.add_update_layer('update', update_rect)
 
         score_display = e.add_entity('score-display')
         timer = e.add_entity('timer')

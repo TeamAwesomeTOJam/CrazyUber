@@ -1,0 +1,13 @@
+{
+  "x": 0,
+  "y": 0,
+  "width": 500,
+  "height": 500,
+  "awake_width" : 20,
+  "awake_height" : 20,
+
+  "angle": 0,
+
+  "components" : ["FollowComponent", "CarSleepComponent"],
+  "tags": ["always_update"]
+}

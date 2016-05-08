@@ -12,5 +12,5 @@
   "angle": 0,
 
   "components" : ["FollowComponent"],
-  "tags": ["update"]
+  "tags": ["always_update"]
 }

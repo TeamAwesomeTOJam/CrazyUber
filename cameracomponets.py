@@ -17,3 +17,4 @@ class FollowComponent(Component):
         entity.x = entity.target.x
         entity.y = entity.target.y
         # entity.angle = entity.target.angle - 90
+        engine.get_engine().entity_manager.update_position(entity)

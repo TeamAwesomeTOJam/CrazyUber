@@ -106,7 +106,7 @@ class CivilianAiManagerCompoenent(Component):
 class GoToPointComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, [('target', None), 'max_forward_speed', ])
+        verify_attrs(entity, [('target', None), 'max_forward_speed', ('slow_on_approach', False) ])
 
         entity.register_handler('update', self.handle_update)
 
@@ -126,7 +126,14 @@ class GoToPointComponent(Component):
 
             entity.steering_angle = angle
 
-            entity.desired_speed = entity.max_forward_speed
+            if entity.slow_on_approach:
+                distance = pos_to_target.length
+                if distance < 40:
+                    entity.desired_speed = entity.max_forward_speed * (distance/80.0)
+                else:
+                    entity.desired_speed = entity.max_forward_speed
+            else:
+                entity.desired_speed = entity.max_forward_speed
 
 class FollowCarCompoent(Component):
     def add(self, entity):
@@ -159,7 +166,7 @@ class BackUpComponent(Component):
 class RoamComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), ('next_corner', None)])
+        verify_attrs(entity, [('ai_mode', 'wait'), ('next_corner', None), ('last_corner', None)])
 
         entity.register_handler('update', self.handle_update)
 
@@ -175,7 +182,17 @@ class RoamComponent(Component):
 
             if entity.next_corner in corners:
                 # print entity.next_corner.next_corners
-                entity.next_corner = random.choice(entity.next_corner.next_corners)
+
+                if entity.last_corner in entity.next_corner.next_corners and len(entity.next_corner.next_corners) > 1:
+                    choices = entity.next_corner.next_corners[:]
+                    choices.remove(entity.last_corner)
+                    # print 'a'
+                else:
+                    choices = entity.next_corner.next_corners
+                    # print 'b'
+                # print choices, entity.last_corner, entity.next_corner, entity.next_corner.next_corners
+                entity.last_corner = entity.next_corner
+                entity.next_corner = random.choice(choices)
 
             entity.target = (entity.next_corner.x, entity.next_corner.y)
         else:

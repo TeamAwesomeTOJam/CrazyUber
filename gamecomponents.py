@@ -108,3 +108,23 @@ class TimerComponent(Component):
         if entity.time < 0:
             entity.time = 0
         entity.text = '{}:{:05.2f}'.format(int(entity.time)/60, entity.time % 60)
+
+class CarSleepComponent(Component):
+
+    def add(self, entity):
+        verify_attrs(entity, ['x', 'y', 'width', 'height', 'awake_width', 'awake_height'])
+
+        entity.register_handler('update', self.handle_update)
+
+    def remove(self, entity):
+        entity.unregister_handler('update', self.handle_update)
+
+    def handle_update(self, entity, dt):
+        to_sleep = engine.get_engine().entity_manager.get_in_area('car', rectangle.from_entity(entity))
+        to_wake = engine.get_engine().entity_manager.get_in_area('car', rectangle.Rect(entity.x, entity.y, entity.awake_width, entity.awake_height))
+
+        for e in to_sleep - to_wake:
+            e.box2d_car.set_awake(False)
+
+        for e in to_wake:
+            e.box2d_car.set_awake(True)

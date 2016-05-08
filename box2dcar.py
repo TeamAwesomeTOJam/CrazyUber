@@ -95,7 +95,9 @@ class TDTire(object):
             self.current_traction = max(friction_coeffecients)
         else:
             self.current_traction = 1
-            
+
+    def set_awake(self, awake):
+        self.body.awake = awake
 
 class TDCar(object):
     # vertices = [(1.5, 0.0),
@@ -150,6 +152,11 @@ class TDCar(object):
 
             tire.body.position = self.body.worldCenter + anchor
             joints.append(j)
+
+    def set_awake(self, awake):
+        for w in self.tires:
+            w.set_awake(awake)
+        self.body.awake = awake
 
     def update(self, steering_angle, desired_speed, hz):
         for tire in self.tires:

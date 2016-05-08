@@ -35,6 +35,7 @@ class Box2dCarComponent(Component):
                                           max_drive_force = entity.engine_force,
                                           max_lateral_impulse= entity.max_lateral_impulse,
                                           position=(entity.x, entity.y))
+        entity.box2d_car.set_awake(False)
 
         entity.register_handler('update', self.handle_update)
 

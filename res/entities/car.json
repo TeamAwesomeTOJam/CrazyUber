@@ -5,7 +5,7 @@
   "height": 6,
   "angle": 0,
   "components": ["Box2dCarComponent", "CarDrawComponent"],
-  "tags": ["update", "draw"],
+  "tags": ["update", "draw", "car"],
 
   "max_steering_angle": 40,
   "engine_force": 150,

@@ -14,7 +14,7 @@ def build_corner_graph():
             found_corner = find_next_corner(corner, direction)
             if found_corner is not None:
                 corner.next_corners.append(found_corner)
-        if len(corner.next_corners) == 0:
+        if len(corner.next_corners) == 1:
             print (corner.x - 10)/ 20, (corner.y - 10)/20
 
 

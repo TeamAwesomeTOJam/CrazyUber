@@ -1,0 +1,9 @@
+{
+  "x": 0,
+  "y": 0,
+  "width": 20,
+  "height": 20,
+  "image": "road.png",
+  "components": ["DrawScaledImageComponent"],
+  "tags": ["terrain", "road", "corner"]
+}

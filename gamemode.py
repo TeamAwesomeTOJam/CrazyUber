@@ -16,10 +16,9 @@ class GameMode(awesomeengine.mode.Mode):
 
         zone = e.add_entity('pickup-zone', x = road[0].x, y=road[0].y)
         player = e.add_entity('player', pickup_target=zone)
-        player_cam_entity = e.add_entity('player-cam', target=player)
 
 
-        self.entities = [player_cam_entity, player]
+        self.entities =[ player]
 
 
         # for tile in road[:50]:
@@ -29,6 +28,7 @@ class GameMode(awesomeengine.mode.Mode):
         for tile in corners[:50]:
             self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
 
+        player_cam_entity = e.add_entity('player-cam', target=self.entities[-1])
 
         score_display = e.add_entity('score-display')
         timer = e.add_entity('timer')

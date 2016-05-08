@@ -30,8 +30,11 @@ class GameMode(awesomeengine.mode.Mode):
         # for y in range(50):
         #     self.entities.append(e.add_entity('civilian-car', x=player.x-20-20*y, y=player.y, follow=player))
 
+        score_display = e.add_entity('score-display')
+
 
         e.entity_manager.commit_changes()
+
 
         cam = e.create_camera(player_cam_entity,
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
@@ -39,7 +42,7 @@ class GameMode(awesomeengine.mode.Mode):
                                       awesomeengine.layer.SimpleCroppedLayer('building'),
                                       # awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
-                              hud=[])
+                              hud=[score_display])
         self.cams = [cam]
         
 

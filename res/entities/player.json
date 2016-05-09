@@ -10,7 +10,7 @@
   "max_steering_angle": 40,
   "engine_force": 300,
   "max_forward_speed": 200,
-  "max_backward_speed": -20,
+  "max_backward_speed": -40,
   "max_lateral_impulse": 12,
 
   "image": "BlackCar.png"

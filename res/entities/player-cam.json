@@ -4,10 +4,10 @@
   "width": 256,
   "height": 144,
 
-  "screen_x": 0,
-  "screen_y": 0,
-  "screen_width": 2560,
-  "screen_height": 1440,
+  "screen_x": "0%",
+  "screen_y": "0%",
+  "screen_width": "100%",
+  "screen_height": "100%",
 
   "angle": 0,
 

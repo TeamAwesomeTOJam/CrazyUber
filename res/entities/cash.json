@@ -1,5 +1,5 @@
 {
-  "topleft": [20, 1200],
+  "topleft": ["5%", "90%"],
   "font": "LiberationSans-Regular",
   "text": "Cash",
   "size": 50,

@@ -1,5 +1,5 @@
 {
-  "topleft": [20, 1300],
+  "topleft": ["5%", "85%"],
   "font": "LiberationSans-Regular",
   "text": "Dropped",
   "size": 50,

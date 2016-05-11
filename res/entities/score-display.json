@@ -1,5 +1,5 @@
 {
-  "topleft": [20, 1400],
+  "topleft": ["5%", "80%"],
   "font": "LiberationSans-Regular",
   "text": "Score",
   "size": 50,

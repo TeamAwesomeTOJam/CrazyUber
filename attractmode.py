@@ -6,12 +6,14 @@ class AttractMode(awesomeengine.mode.Mode):
         e = awesomeengine.get_engine()
 
         welcome_cam_entity = e.add_entity('attract-cam')
-        welcom_text = e.add_entity('attract-text')
+        # welcom_text = e.add_entity('attract-text')
         manager = e.add_entity('attract-manager')
+        image = e.add_entity('title-image')
 
-        self.entities = [welcome_cam_entity, welcom_text, manager]
+        self.entities = [welcome_cam_entity, image, manager]
 
-        cam = e.create_camera(welcome_cam_entity, layers=[awesomeengine.layer.SolidBackgroundLayer((100,100,100,255))], hud=[welcom_text])
+        cam = e.create_camera(welcome_cam_entity, layers=[awesomeengine.layer.SolidBackgroundLayer((100,100,100,255)),
+                                                          awesomeengine.layer.SimpleLayer('draw')],)
 
         self.cams = [cam]
 

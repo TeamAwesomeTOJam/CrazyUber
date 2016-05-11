@@ -1,0 +1,9 @@
+{
+  "x": 0,
+  "y": 0,
+  "width": 2560,
+  "height": 1440,
+  "image": "Title.png",
+  "tags": ["draw"],
+  "components": ["DrawScaledImageComponent"]
+}

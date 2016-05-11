@@ -4,5 +4,6 @@
   "width": 20,
   "height": 20,
   "components": ["DrawHitBoxComponent"],
-  "tags": ["draw", "pickup_zone"]
+  "tags": ["draw", "pickup_zone"],
+  "colour": [0,255,255,255]
 }

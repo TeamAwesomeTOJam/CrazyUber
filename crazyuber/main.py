@@ -1,3 +1,5 @@
+import os
+
 import awesomeengine
 import attractmode
 import gamemode
@@ -10,7 +12,7 @@ import aicomponents
 import gamecomponents
 
 def go():
-    engine = awesomeengine.Engine('res')
+    engine = awesomeengine.Engine(os.path.join(os.path.dirname(__file__), 'res'))
     engine.component_manager.register_module(attractmodecomponents)
     engine.component_manager.register_module(cameracomponets)
     engine.component_manager.register_module(playercomponents)

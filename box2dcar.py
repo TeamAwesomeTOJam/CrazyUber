@@ -15,7 +15,7 @@ class TDGroundArea(object):
 
 class TDTire(object):
 
-    def __init__(self, car, max_drive_force=150,
+    def __init__(self, car, angle, max_drive_force=150,
                  turn_torque=15, max_lateral_impulse=3,
                  dimensions=(0.5, 1.25), density=1.0,
                  position=(0, 0)):
@@ -31,6 +31,7 @@ class TDTire(object):
         self.body = world.CreateDynamicBody(position=position)
         self.body.CreatePolygonFixture(box=dimensions, density=density)
         self.body.userData = {'obj': self}
+        self.body.angle = math.radians(angle)
 
     @property
     def forward_velocity(self):
@@ -121,17 +122,21 @@ class TDCar(object):
                     (2.5, 8.50-5),
                     ]
 
-    def __init__(self, world, entity=None, vertices=None,
+    def __init__(self, world, angle = 90, entity=None, vertices=None,
                  tire_anchors=None, density=0.1, position=(0, 0),
                  **tire_kws):
+
+        angle = angle - 90
+
         if vertices is None:
             vertices = TDCar.vertices
 
         self.body = world.CreateDynamicBody(position=position)
         self.body.CreatePolygonFixture(vertices=vertices, density=density)
         self.body.userData = {'obj': self, 'entity': entity}
+        self.body.angle = math.radians(angle)
 
-        self.tires = [TDTire(self, **tire_kws) for i in range(4)]
+        self.tires = [TDTire(self,angle=angle, **tire_kws) for i in range(4)]
 
         if tire_anchors is None:
             anchors = TDCar.tire_anchors
@@ -150,7 +155,8 @@ class TDCar(object):
                                           upperAngle=0,
                                           )
 
-            tire.body.position = self.body.worldCenter + anchor
+            tire.body.position = self.body.worldCenter + self.body.GetWorldVector(anchor)
+
             joints.append(j)
 
     def set_awake(self, awake):

@@ -1,6 +1,7 @@
 import random
 import awesomeengine
 import cornergraph
+from awesomeengine.vec2d import Vec2d
 
 
 class GameMode(awesomeengine.mode.Mode):
@@ -34,7 +35,12 @@ class GameMode(awesomeengine.mode.Mode):
             self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
         for tile in corners:
-            self.entities.append(e.add_entity('civilian-car', x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
+
+            target = random.choice(tile.next_corners)
+
+            angle = (Vec2d(tile.x, tile.y) - Vec2d(target.x, target.y)).angle
+
+            self.entities.append(e.add_entity('civilian-car', angle=angle, x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
 
 
 
@@ -57,7 +63,6 @@ class GameMode(awesomeengine.mode.Mode):
                               layers=[awesomeengine.layer.SolidBackgroundLayer((100, 100, 100, 255)),
                                       awesomeengine.layer.SimpleCroppedLayer('terrain'),
                                       awesomeengine.layer.SimpleCroppedLayer('building'),
-                                      #awesomeengine.layer.PhysicsLayer(),
                                       awesomeengine.layer.SimpleCroppedLayer('draw')],
                               hud=[score_display, timer, fare, cash, dropped])
         self.cams = [cam]

@@ -34,8 +34,9 @@ class InputCarComponent(Component):
 class Box2dCarComponent(Component):
 
     def add(self, entity):
-        verify_attrs(entity, ['x', 'y', ('max_lateral_impulse', 3), 'max_steering_angle', 'engine_force', ('steering_angle', 0), 'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)] )
+        verify_attrs(entity, [('angle', 90),'x', 'y', ('max_lateral_impulse', 3), 'max_steering_angle', 'engine_force', ('steering_angle', 0), 'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)] )
         entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
+                                          angle=entity.angle,
                                           entity=entity,
                                           max_drive_force = entity.engine_force,
                                           max_lateral_impulse= entity.max_lateral_impulse,

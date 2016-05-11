@@ -1,7 +1,7 @@
 {
-  "x": 400,
+  "x": 440,
   "y": -400,
-  "angle": 0,
+  "angle": 90,
   "name": "player",
   "components+": ["InputCarComponent", "PasangerPickupComponent", "DrawPickupArrowComponent"],
 

@@ -65,9 +65,14 @@ class Box2dCarComponent(Component):
         
         if (primary or not other_is_car) and ((player.x - entity.x)**2 + (player.y - entity.y) ** 2) < 10000:
             try:
-                engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+                if (hasattr(entity, 'name') and entity.name == 'player') or (hasattr(other, 'name') and other.name == 'player'):
+                    channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+                    channel.volume = 128
+                else:
+                    channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+                    channel.volume = 32
             except:
-                pass       
+                pass
 
 class CarDrawComponent(Component):
 

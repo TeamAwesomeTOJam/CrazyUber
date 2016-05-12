@@ -30,7 +30,7 @@ class GameMode(awesomeengine.mode.Mode):
 
         only_road = list(e.entity_manager.get_by_tag('road') - e.entity_manager.get_by_tag('corner'))
         random.shuffle(only_road)
-        num_taxi = 50
+        num_taxi = 75
         for tile in only_road[:num_taxi]:
             self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 

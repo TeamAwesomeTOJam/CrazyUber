@@ -191,6 +191,9 @@ class RoamComponent(Component):
                     choices = entity.next_corner.next_corners
                     # print 'b'
                 # print choices, entity.last_corner, entity.next_corner, entity.next_corner.next_corners
+                c = random.choice(choices)
+                if c == entity.last_corner:
+                    print 'u-turn at', entity.next_corner.x, entity.next_corner.y, 'to', c.x, c.y
                 entity.last_corner = entity.next_corner
                 entity.next_corner = random.choice(choices)
 

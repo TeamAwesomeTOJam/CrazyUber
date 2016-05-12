@@ -67,10 +67,10 @@ class Box2dCarComponent(Component):
             try:
                 if (hasattr(entity, 'name') and entity.name == 'player') or (hasattr(other, 'name') and other.name == 'player'):
                     channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
-                    channel.volume = 128
+                    channel.volume = 32
                 else:
                     channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
-                    channel.volume = 32
+                    channel.volume = 16
             except:
                 pass
 

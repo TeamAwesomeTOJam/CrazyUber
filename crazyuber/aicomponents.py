@@ -194,6 +194,8 @@ class RoamComponent(Component):
                 entity.last_corner = entity.next_corner
                 entity.next_corner = random.choice(choices)
 
+
+
             entity.target = (entity.next_corner.x, entity.next_corner.y)
         else:
             entity.target = None

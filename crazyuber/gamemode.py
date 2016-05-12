@@ -30,7 +30,7 @@ class GameMode(awesomeengine.mode.Mode):
 
         only_road = list(e.entity_manager.get_by_tag('road') - e.entity_manager.get_by_tag('corner'))
         random.shuffle(only_road)
-        num_taxi = 75
+        num_taxi = 65
         for tile in only_road[:num_taxi]:
             self.entities.append(e.add_entity('taxi', x=tile.x, y=tile.y, follow=player))
 
@@ -38,15 +38,9 @@ class GameMode(awesomeengine.mode.Mode):
 
             target = random.choice(tile.next_corners)
 
-            angle = (Vec2d(tile.x, tile.y) - Vec2d(target.x, target.y)).angle
+            angle = (Vec2d(target.x, target.y) - Vec2d(tile.x, tile.y)).angle
 
-            print 'target', target.x, target.y
-            print 'tile', tile.x, tile.y
-            print 'tile - target', (Vec2d(tile.x, tile.y) - Vec2d(target.x, target.y))
-            print 'angle', angle
-
-            self.entities.append(e.add_entity('civilian-car', angle=angle, x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
-
+            self.entities.append(e.add_entity('civilian-car', angle=angle, x=tile.x, y=tile.y, ai_mode='roam', next_corner=target))
 
 
         player_cam_entity = e.add_entity('player-cam', target=player)

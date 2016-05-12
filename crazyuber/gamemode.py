@@ -40,6 +40,11 @@ class GameMode(awesomeengine.mode.Mode):
 
             angle = (Vec2d(tile.x, tile.y) - Vec2d(target.x, target.y)).angle
 
+            print 'target', target.x, target.y
+            print 'tile', tile.x, tile.y
+            print 'tile - target', (Vec2d(tile.x, tile.y) - Vec2d(target.x, target.y))
+            print 'angle', angle
+
             self.entities.append(e.add_entity('civilian-car', angle=angle, x=tile.x, y=tile.y, ai_mode='roam', next_corner=tile))
 
 

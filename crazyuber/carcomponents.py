@@ -1,4 +1,3 @@
-from awesomeengine.component import verify_attrs
 from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
@@ -11,14 +10,16 @@ import random
 
 class InputCarComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['max_steering_angle', ('steering_angle', 0),
-                              'max_forward_speed', 'max_backward_speed', ('desired_speed', 0), ('desired_forward_speed', 0),
-                              ('desired_backward_speed', 0)])
-        entity.register_handler('input', self.handle_input)
-
-    def remove(self, entity):
-        entity.unregister_handler('input', self.handle_input)
+    def __init__(self):
+        self.required_attrs = (
+            'max_steering_angle', 
+            ('steering_angle', 0),
+            'max_forward_speed', 
+            'max_backward_speed', 
+            ('desired_speed', 0), 
+            ('desired_forward_speed', 0),
+            ('desired_backward_speed', 0))
+        self.event_handlers = (('input', self.handle_input),)
 
     def handle_input(self, entity, action, value):
         if action == 'gas':
@@ -33,8 +34,22 @@ class InputCarComponent(Component):
 
 class Box2dCarComponent(Component):
 
+    def __init__(self):
+        self.required_attrs = (
+            ('angle', 90),
+            'x', 
+            'y', 
+            ('max_lateral_impulse', 3), 
+            'max_steering_angle', 
+            'engine_force', 
+            ('steering_angle', 0), 
+            'max_forward_speed', 
+            'max_backward_speed', 
+            ('desired_speed', 0))
+        self.event_handlers = (('update', self.handle_update), ('contact', self.handle_contact))
+    
     def add(self, entity):
-        verify_attrs(entity, [('angle', 90),'x', 'y', ('max_lateral_impulse', 3), 'max_steering_angle', 'engine_force', ('steering_angle', 0), 'max_forward_speed', 'max_backward_speed', ('desired_speed', 0)] )
+        Component.add(self, entity)
         entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
                                           angle=entity.angle,
                                           entity=entity,
@@ -42,13 +57,7 @@ class Box2dCarComponent(Component):
                                           max_lateral_impulse= entity.max_lateral_impulse,
                                           position=(entity.x, entity.y))
         entity.box2d_car.set_awake(False)
-
-        entity.register_handler('update', self.handle_update)
-        entity.register_handler('contact', self.handle_contact)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
-
+        
     def handle_update(self, entity, dt):
         entity.box2d_car.update(entity.steering_angle, entity.desired_speed, dt)
 
@@ -74,15 +83,12 @@ class Box2dCarComponent(Component):
             except:
                 pass
 
+
 class CarDrawComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['width', 'height', ('colour', (255,255, 0,255))])
-
-        entity.register_handler('draw', self.handle_draw)
-
-    def remove(self, entity):
-        entity.unregister_handler('draw', self.handle_draw)
+    def __init__(self):
+        self.required_attrs = ('width', 'height', ('colour', (255,255, 0,255)))
+        self.event_handlers = (('draw', self.handle_draw),)
 
     def handle_draw(self, entity, camera):
         x,y = entity.box2d_car.body.GetWorldPoint((0, 0))
@@ -91,14 +97,16 @@ class CarDrawComponent(Component):
         rect = rectangle.Rect(x,y,entity.width, entity.height, angle)
 
         camera.draw_rect(entity.colour, rect)
+        
 
 class RandomImageChooserComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['images'])
-        entity.image = random.choice(entity.images)
+    def __init__(self):
+        self.required_attrs = ('images',)
+        self.event_handlers = tuple()
         
-    def remove(self, entity):
-        pass
+    def add(self, entity):
+        Component.add(self, entity)
+        entity.image = random.choice(entity.images)
         
 

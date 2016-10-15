@@ -5,11 +5,9 @@ from awesomeengine import engine
 
 class NextModeComponent(Component):
 
-    def add(self, entity):
-        entity.register_handler('input', self.handle_input)
-
-    def remove(self, entity):
-        entity.unregister_handler('input', self.handle_input)
+    def __init__(self):
+        self.required_attrs = tuple()
+        self.event_handlers = (('input', self.handle_input),)
 
     def handle_input(self, entity, action, value):
         if action == "play" and value == 1:

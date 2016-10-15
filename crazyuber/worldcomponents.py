@@ -1,4 +1,3 @@
-from awesomeengine.component import verify_attrs
 from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
@@ -9,10 +8,15 @@ import math
 
 from awesomeengine import rectangle
 
+
 class StaticBoxComponent(Component):
 
+    def __init__(self):
+        self.required_attrs = ('x', 'y', 'width', 'height')
+        self.event_handlers = tuple()
+
     def add(self, entity):
-        verify_attrs(entity, ['x', 'y', 'width', 'height'])
+        Component.add(self, entity)
 
         world = engine.get_engine().box2d_world
 
@@ -20,15 +24,16 @@ class StaticBoxComponent(Component):
 
         body = world.CreateStaticBody(position=(entity.x, entity.y), userData={'entity': entity})
         body.CreatePolygonFixture(vertices=r.corners)
-
-    def remove(self, entity):
-        pass
         
 
 class SurfaceComponent(Component):
+
+    def __init__(self):
+        self.required_attrs = ('x', 'y', 'width', 'height', 'friction')
+        self.event_handlers = tuple()
     
     def add(self, entity):
-        verify_attrs(entity, ['x', 'y', 'width', 'height', 'friction'])
+        Component.add(self, entity)
         
         world = engine.get_engine().box2d_world
         r = rectangle.Rect(0, 0, entity.width, entity.height)
@@ -36,21 +41,15 @@ class SurfaceComponent(Component):
         fixture = body.CreatePolygonFixture(vertices=r.corners)
         fixture.sensor = True
         
-    def remove(self, entity):
-        pass
-        
         
 class DrawCornerGraphComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['x', 'y', ('next_corners', [])])
-
-        entity.register_handler('draw', self.handle_draw)
-
-    def remove(self, entity):
-        entity.unregister_handler('draw', self.handle_draw)
+    def __init__(self):
+        self.required_attrs = ('x', 'y', ('next_corners', []))
+        self.event_handlers = (('draw', self.handle_draw),)
 
     def handle_draw(self, entity, camera):
         for c in entity.next_corners:
             p = (c.x,c.y)
             camera.draw_line((255,255,255,255), (entity.x, entity.y), p)
+            

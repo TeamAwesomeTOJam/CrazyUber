@@ -1,21 +1,17 @@
-from awesomeengine.component import verify_attrs
+import random
+import collections
+
 from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
 from awesomeengine import rectangle
-import random
 
-import collections
 
 class AiManagerCompoenent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), ('ai_mode_timer', 0), ('velocity_queue', collections.deque(maxlen=30))])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('ai_mode', 'wait'), ('ai_mode_timer', 0), ('velocity_queue', collections.deque(maxlen=30)))
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         #if ai_mode_timer > 0
@@ -54,15 +50,12 @@ class AiManagerCompoenent(Component):
             entity.ai_mode = 'follow'
             entity.ai_mode_timer = -1
 
+
 class CivilianAiManagerCompoenent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), ('ai_mode_timer', 0), ('velocity_queue', collections.deque(maxlen=30))])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('ai_mode', 'wait'), ('ai_mode_timer', 0), ('velocity_queue', collections.deque(maxlen=30)))
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         #if ai_mode_timer > 0
@@ -102,16 +95,11 @@ class CivilianAiManagerCompoenent(Component):
             entity.ai_mode_timer = -1
 
 
-
 class GoToPointComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('target', None), 'max_forward_speed', ('slow_on_approach', False) ])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('target', None), 'max_forward_speed', ('slow_on_approach', False))
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
 
@@ -135,13 +123,12 @@ class GoToPointComponent(Component):
             else:
                 entity.desired_speed = entity.max_forward_speed
 
-class FollowCarCompoent(Component):
-    def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), ('follow', None)])
-        entity.register_handler('update', self.handle_update)
 
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+class FollowCarCompoent(Component):
+    
+    def __init__(self):
+        self.required_attrs = (('ai_mode', 'wait'), ('follow', None))
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         if entity.ai_mode == 'follow' and entity.follow is not None:
@@ -149,29 +136,24 @@ class FollowCarCompoent(Component):
         else:
             entity.target = None
 
+
 class BackUpComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), 'max_backward_speed'])
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('ai_mode', 'wait'), 'max_backward_speed')
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         if entity.ai_mode == 'backup':
             entity.desired_speed = entity.max_backward_speed
             entity.steering_angle = 0
 
+
 class RoamComponent(Component):
-
-    def add(self, entity):
-        verify_attrs(entity, [('ai_mode', 'wait'), ('next_corner', None), ('last_corner', None)])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    
+    def __init__(self):
+        self.required_attrs = (('ai_mode', 'wait'), ('next_corner', None), ('last_corner', None))
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         if entity.ai_mode == 'roam' and entity.next_corner is not None:
@@ -197,21 +179,18 @@ class RoamComponent(Component):
                 entity.last_corner = entity.next_corner
                 entity.next_corner = random.choice(choices)
 
-
-
             entity.target = (entity.next_corner.x, entity.next_corner.y)
         else:
             entity.target = None
 
+
 class DrawTargetComponent(Component):
-    def add(self, entity):
-        verify_attrs(entity, ['x', 'y', 'target'])
 
-        entity.register_handler('draw', self.handle_draw)
-
-    def remove(self, entity):
-        entity.unregister_handler('draw', self.handle_draw)
+    def __init__(self):
+        self.required_attrs = ('x', 'y', 'target')
+        self.event_handlers = (('draw', self.handle_draw),)
 
     def handle_draw(self, entity, camera):
         if entity.target is not None:
             camera.draw_line((255, 255, 255, 255), (entity.x, entity.y), entity.target)
+            

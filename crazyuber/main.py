@@ -1,4 +1,5 @@
 import os
+import sys
 
 import awesomeengine
 import attractmode
@@ -11,8 +12,14 @@ import worldcomponents
 import aicomponents
 import gamecomponents
 
+
 def go():
-    engine = awesomeengine.Engine(os.path.join(os.path.dirname(__file__), 'res'))
+    if getattr(sys, 'frozen', False):
+        root = sys._MEIPASS
+    else:
+        root = os.path.dirname(__file__)
+            
+    engine = awesomeengine.Engine(os.path.join(root, 'res'))
     engine.component_manager.register_module(attractmodecomponents)
     engine.component_manager.register_module(cameracomponets)
     engine.component_manager.register_module(playercomponents)

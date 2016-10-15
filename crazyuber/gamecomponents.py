@@ -1,23 +1,18 @@
+import math
 import random
 
-from awesomeengine.component import verify_attrs
 from awesomeengine.component import Component
 from awesomeengine import engine
 from awesomeengine.vec2d import Vec2d
 from awesomeengine import rectangle
 
-import math
 
 class PasangerPickupComponent(Component):
-
-    def add(self, entity):
-        verify_attrs(entity, [('pickup_target', None), ('dropoff_target', None)])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
-
+    
+    def __init__(self):
+        self.required_attrs = (('pickup_target', None), ('dropoff_target', None))
+        self.event_handlers = (('update', self.handle_update),)
+        
     def handle_update(self, entity, dt):
         e = engine.get_engine()
         if entity.pickup_target is not None:
@@ -94,15 +89,12 @@ class PasangerPickupComponent(Component):
                 e.entity_manager.get_by_name('dropped').dropped += 1
                 return
 
+
 class DrawPickupArrowComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('pickup_target', None), ('dropoff_target', None), "x", "y"])
-
-        entity.register_handler('draw', self.handle_draw)
-
-    def remove(self, entity):
-        entity.unregister_handler('draw', self.handle_draw)
+    def __init__(self):
+        self.required_attrs = (('pickup_target', None), ('dropoff_target', None), "x", "y")
+        self.event_handlers = (('draw', self.handle_draw),)
 
     def handle_draw(self, entity, camera):
         if entity.pickup_target is not None:
@@ -127,38 +119,29 @@ class DrawPickupArrowComponent(Component):
 
 class ScoreComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('score',0)])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('score', 0),)
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         entity.text = 'Trips Made: {}'.format(entity.score)
 
+
 class DroppedComponent(Component):
-    def add(self, entity):
-        verify_attrs(entity, [('dropped', 0)])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    
+    def __init__(self):
+        self.required_attrs = (('dropped', 0),)
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         entity.text = 'Trips Failed: {}'.format(entity.dropped)
 
+
 class TimerComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['time', 'time_per_distatnce'])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = ('time', 'time_per_distatnce')
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         entity.time -= dt
@@ -169,15 +152,12 @@ class TimerComponent(Component):
         else:
             entity.text = ''
 
+
 class CarSleepComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, ['x', 'y', 'width', 'height', 'awake_width', 'awake_height'])
-
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = ('x', 'y', 'width', 'height', 'awake_width', 'awake_height')
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         to_sleep = engine.get_engine().entity_manager.get_in_area('car', rectangle.from_entity(entity))
@@ -191,13 +171,10 @@ class CarSleepComponent(Component):
 
 
 class FareComponent(Component):
-    def add(self, entity):
-        verify_attrs(entity, [('active', False), ('fare', 0), 'rate'])
 
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = (('active', False), ('fare', 0), 'rate')
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         if entity.active:
@@ -206,14 +183,13 @@ class FareComponent(Component):
         else:
             entity.text = ''
 
+
 class Cash(Component):
-    def add(self, entity):
-        verify_attrs(entity, ['amount'])
 
-        entity.register_handler('update', self.handle_update)
-
-    def remove(self, entity):
-        entity.unregister_handler('update', self.handle_update)
+    def __init__(self):
+        self.required_attrs = ('amount',)
+        self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
         entity.text = 'Cash: ${:.2f}'.format(entity.amount)
+        

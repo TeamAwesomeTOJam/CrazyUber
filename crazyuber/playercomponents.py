@@ -1,16 +1,12 @@
-from awesomeengine.component import verify_attrs
 from awesomeengine.component import Component
 from awesomeengine import engine
 
+
 class InputVelocityComponent(Component):
 
-    def add(self, entity):
-        verify_attrs(entity, [('vx', 0), ('vy', 0)])
-
-        entity.register_handler('input', self.handle_input)
-
-    def remove(self, entity):
-        entity.unregister_handler('input', self.handle_input)
+    def __init__(self):
+        self.required_attrs = (('vx', 0), ('vy', 0))
+        self.event_handlers = (('input', self.handle_input),)
 
     def handle_input(self, entity, action, value):
         if action == 'up' and value == 1:

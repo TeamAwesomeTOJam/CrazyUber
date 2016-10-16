@@ -11,4 +11,4 @@ class NextModeComponent(Component):
 
     def handle_input(self, entity, action, value):
         if action == "play" and value == 1:
-            engine.get_engine().change_mode('game')
+            engine.get().change_mode('game')

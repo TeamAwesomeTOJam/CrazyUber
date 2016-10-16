@@ -18,7 +18,7 @@ class StaticBoxComponent(Component):
     def add(self, entity):
         Component.add(self, entity)
 
-        world = engine.get_engine().box2d_world
+        world = engine.get().box2d_world
 
         r = rectangle.Rect(0,0,entity.width, entity.height)
 
@@ -35,7 +35,7 @@ class SurfaceComponent(Component):
     def add(self, entity):
         Component.add(self, entity)
         
-        world = engine.get_engine().box2d_world
+        world = engine.get().box2d_world
         r = rectangle.Rect(0, 0, entity.width, entity.height)
         body = world.CreateStaticBody(position=(entity.x, entity.y), allowSleep=True, awake=False, userData={'entity': entity})
         fixture = body.CreatePolygonFixture(vertices=r.corners)

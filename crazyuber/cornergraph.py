@@ -4,7 +4,7 @@ from awesomeengine import rectangle
 
 
 def build_corner_graph():
-    e = awesomeengine.get_engine()
+    e = awesomeengine.get()
 
     corners = list(e.entity_manager.get_by_tag('corner'))
 
@@ -27,7 +27,7 @@ def find_next_corner(corner, dir):
     while True:
         check_rect = rectangle.Rect(current_tile.x + dir.x * current_tile.width, current_tile.y + dir.y * current_tile.height, 2, 2)
 
-        next_tiles = awesomeengine.get_engine().entity_manager.get_in_area('road', check_rect)
+        next_tiles = awesomeengine.get().entity_manager.get_in_area('road', check_rect)
         if len(next_tiles) > 0:
             distance += 1
             next_tile = next_tiles.pop()

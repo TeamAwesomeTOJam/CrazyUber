@@ -7,7 +7,7 @@ from awesomeengine.vec2d import Vec2d
 class GameMode(awesomeengine.mode.Mode):
 
     def enter(self):
-        e = awesomeengine.get_engine()
+        e = awesomeengine.get()
         e.add_entities_from_map('map1')
 
         cornergraph.build_corner_graph()
@@ -72,7 +72,7 @@ class GameMode(awesomeengine.mode.Mode):
         self.ambient.play(loops=-1)
 
     def leave(self):
-        e = awesomeengine.get_engine()
+        e = awesomeengine.get()
         for cam in self.cams:
             e.remove_camera(cam)
         for ent in self.entities:

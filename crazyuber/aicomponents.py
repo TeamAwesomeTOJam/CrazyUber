@@ -158,7 +158,7 @@ class RoamComponent(Component):
     def handle_update(self, entity, dt):
         if entity.ai_mode == 'roam' and entity.next_corner is not None:
 
-            e = engine.get_engine()
+            e = engine.get()
 
             corners = e.entity_manager.get_in_area('corner', rectangle.from_entity(entity))
 

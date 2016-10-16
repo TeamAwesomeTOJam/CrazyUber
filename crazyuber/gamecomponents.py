@@ -14,9 +14,9 @@ class PasangerPickupComponent(Component):
         self.event_handlers = (('update', self.handle_update),)
         
     def handle_update(self, entity, dt):
-        e = engine.get_engine()
+        e = engine.get()
         if entity.pickup_target is not None:
-            targets = engine.get_engine().entity_manager.get_in_area('pickup_zone', rectangle.from_entity(entity))
+            targets = engine.get().entity_manager.get_in_area('pickup_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.pickup_target:
 
@@ -30,7 +30,7 @@ class PasangerPickupComponent(Component):
                     road = list(e.entity_manager.get_by_tag('road'))
                     random.shuffle(road)
                     r = road[0]
-                    new_target = engine.get_engine().add_entity('dropoff-zone', x=r.x, y=r.y)
+                    new_target = engine.get().add_entity('dropoff-zone', x=r.x, y=r.y)
                     entity.dropoff_target = new_target
 
                     end = Vec2d(new_target.x, new_target.y)
@@ -45,7 +45,7 @@ class PasangerPickupComponent(Component):
                     return
 
         elif entity.dropoff_target is not None:
-            targets = engine.get_engine().entity_manager.get_in_area('dropoff_zone', rectangle.from_entity(entity))
+            targets = engine.get().entity_manager.get_in_area('dropoff_zone', rectangle.from_entity(entity))
             for t in targets:
                 if t == entity.dropoff_target:
 
@@ -68,7 +68,7 @@ class PasangerPickupComponent(Component):
                     road = list(e.entity_manager.get_by_tag('road'))
                     random.shuffle(road)
                     r = road[0]
-                    new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
+                    new_target = engine.get().add_entity('pickup-zone', x=r.x, y=r.y)
                     entity.pickup_target = new_target
                     e.entity_manager.get_by_name('score').score += 1
                     return
@@ -84,7 +84,7 @@ class PasangerPickupComponent(Component):
                 road = list(e.entity_manager.get_by_tag('road'))
                 random.shuffle(road)
                 r = road[0]
-                new_target = engine.get_engine().add_entity('pickup-zone', x=r.x, y=r.y)
+                new_target = engine.get().add_entity('pickup-zone', x=r.x, y=r.y)
                 entity.pickup_target = new_target
                 e.entity_manager.get_by_name('dropped').dropped += 1
                 return
@@ -160,8 +160,8 @@ class CarSleepComponent(Component):
         self.event_handlers = (('update', self.handle_update),)
 
     def handle_update(self, entity, dt):
-        to_sleep = engine.get_engine().entity_manager.get_in_area('car', rectangle.from_entity(entity))
-        to_wake = engine.get_engine().entity_manager.get_in_area('car', rectangle.Rect(entity.x, entity.y, entity.awake_width, entity.awake_height))
+        to_sleep = engine.get().entity_manager.get_in_area('car', rectangle.from_entity(entity))
+        to_wake = engine.get().entity_manager.get_in_area('car', rectangle.Rect(entity.x, entity.y, entity.awake_width, entity.awake_height))
 
         for e in to_sleep - to_wake:
             e.box2d_car.set_awake(False)

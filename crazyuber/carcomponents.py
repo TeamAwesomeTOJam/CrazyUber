@@ -50,7 +50,7 @@ class Box2dCarComponent(Component):
     
     def add(self, entity):
         Component.add(self, entity)
-        entity.box2d_car = box2dcar.TDCar(engine.get_engine().box2d_world,
+        entity.box2d_car = box2dcar.TDCar(engine.get().box2d_world,
                                           angle=entity.angle,
                                           entity=entity,
                                           max_drive_force = entity.engine_force,
@@ -64,21 +64,21 @@ class Box2dCarComponent(Component):
         entity.x, entity.y = entity.box2d_car.body.GetWorldPoint((0,0))
         entity.angle = math.degrees(entity.box2d_car.body.angle) + 90
 
-        engine.get_engine().entity_manager.update_position(entity)
+        engine.get().entity_manager.update_position(entity)
         
     def handle_contact(self, entity, other, primary):
         crash_sounds = ('crash1', 'crash2')
     
-        player = engine.get_engine().entity_manager.get_by_name('player')
+        player = engine.get().entity_manager.get_by_name('player')
         other_is_car = hasattr(other, 'tags') and 'car' in other.tags
         
         if (primary or not other_is_car) and ((player.x - entity.x)**2 + (player.y - entity.y) ** 2) < 10000:
             try:
                 if (hasattr(entity, 'name') and entity.name == 'player') or (hasattr(other, 'name') and other.name == 'player'):
-                    channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+                    channel = engine.get().resource_manager.get('sound', random.choice(crash_sounds)).play()
                     channel.volume = 32
                 else:
-                    channel = engine.get_engine().resource_manager.get('sound', random.choice(crash_sounds)).play()
+                    channel = engine.get().resource_manager.get('sound', random.choice(crash_sounds)).play()
                     channel.volume = 16
             except:
                 pass

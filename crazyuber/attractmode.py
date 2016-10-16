@@ -3,7 +3,7 @@ import awesomeengine
 class AttractMode(awesomeengine.mode.Mode):
 
     def enter(self):
-        e = awesomeengine.get_engine()
+        e = awesomeengine.get()
 
         welcome_cam_entity = e.add_entity('attract-cam')
         # welcom_text = e.add_entity('attract-text')
@@ -19,7 +19,7 @@ class AttractMode(awesomeengine.mode.Mode):
 
 
     def leave(self):
-        e = awesomeengine.get_engine()
+        e = awesomeengine.get()
         for cam in self.cams:
             e.remove_camera(cam)
         for ent in self.entities:

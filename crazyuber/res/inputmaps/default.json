@@ -3,14 +3,14 @@
   "KeyCode.r": ["ENGINE", "CLEAR"],
   "KeyCode.f": ["ENGINE", "FULLSCREEN"],
 
-  "KeyCode.return_": ["attract-manager", "play"],
+  "KeyCode.return_": ["GAME", "play"],
 
   "KeyCode.w" : ["player", "gas"],
   "KeyCode.s" : ["player", "break"],
   "KeyCode.a" : ["player", "-steer"],
   "KeyCode.d" : ["player", "steer"],
-  
-  "0 ControllerButton.start" : ["attract-manager", "play"],
+
+  "0 ControllerButton.start" : ["GAME", "play"],
   "0 ControllerButton.a" : ["player", "gas"],
   "0 ControllerButton.b" : ["player", "break"],
   "0 ControllerAxis.triggerright" : ["player", "gas"],

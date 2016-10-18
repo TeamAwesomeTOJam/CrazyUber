@@ -18,7 +18,7 @@ def go():
         root = sys._MEIPASS
     else:
         root = os.path.dirname(__file__)
-            
+
     engine = awesomeengine.Engine(os.path.join(root, 'res'))
     engine.component_manager.register_module(attractmodecomponents)
     engine.component_manager.register_module(cameracomponets)
@@ -27,8 +27,6 @@ def go():
     engine.component_manager.register_module(worldcomponents)
     engine.component_manager.register_module(aicomponents)
     engine.component_manager.register_module(gamecomponents)
-
-    engine.create_box2d_world((0, 0))
 
     engine.add_mode('attract', attractmode.AttractMode())
     engine.add_mode('game', gamemode.GameMode())

@@ -17,7 +17,7 @@ def go():
     if getattr(sys, 'frozen', False):
         root = sys._MEIPASS
     else:
-        root = os.path.dirname(__file__)
+        root = os.path.dirname(os.path.abspath(__file__))
 
     engine = awesomeengine.Engine(os.path.join(root, 'res'))
     engine.component_manager.register_module(attractmodecomponents)
